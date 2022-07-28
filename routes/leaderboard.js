@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
   const page = parseInt(req.query.page);
   const start = (page - 1) * 10;
   const end = start + 10;
-  const users = orderedUsers.slice(start, end)
+  const users = orderedUsers.slice(start, end);
   res.status(200).json({users});
 });
 
