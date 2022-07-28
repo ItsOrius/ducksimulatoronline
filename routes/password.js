@@ -23,14 +23,17 @@ function claimBounty(password, claimerId, res) {
   }
   const client = require("../index.js")
   const config = require("../config.json")
-  client.guilds.fetch(config.guildId).then(async guild => {
-    guild.members.fetch(`${claimerId}`).then(member => {
+  return client.guilds.fetch(config.guildId).then(async guild => {
+    return guild.members.fetch(`${claimerId}`).then(member => {
       const db = require("../db.json");
-      const hunter = db.users[claimerId];
-      const bounty = db.users[secrets[password]];
-
+      db.users[secrets[password]].config.claimer = claimerId;
+      fs.writeFileSync("./db.json", JSON.stringify(db));
+      if (res) {
+        res.status(200).json({ message: "Successfully claimed!" });
+      }
+      return true;
     }).catch(e => {
-      throw new Error("User not found.");
+      throw new Error("Claimer not found.");
     })
   }).catch(e => {
     if (res) {

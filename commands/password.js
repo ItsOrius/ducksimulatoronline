@@ -6,12 +6,12 @@ const data = new SlashCommandBuilder()
 	.setDescription('Sends your secret password to link to Duck Simulator 2!')
 
 function generatePassword(id) {
-  const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const db = require("../secrets.json");
   let password;
   while (!password || db[password]) {
     password = "";
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
       password += chars[Math.floor(Math.random() * chars.length)];
     }
   }
