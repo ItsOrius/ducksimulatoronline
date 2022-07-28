@@ -1,0 +1,7 @@
+const name = 'eventName';
+
+function execute(client) {
+  // code stuff
+}
+
+module.exports = { name, execute };

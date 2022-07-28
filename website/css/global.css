@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+@font-face {
+  font-family: "Comic Helvetic";
+  src: url("../fonts/ComicHelvetic_Light.otf");
+}
+
+html {
+  color: white;
+  font-family: "Comic Helvetic", "Courier New", monospace, sans-serif;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+a {
+  color: #77f;
+  text-decoration: none;
+}
+
+body {
+  background-color: #111;
+}
+
+header {
+  background-color: #222;
+  padding: 1% 5%;
+  box-shadow: #000 0px 0px 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 300%;
+  margin: 0;
+  text-shadow: #000 0px 5px 10px;
+  margin-top: 0.5%;
+}
+
+h2 {
+  font-size: 200%;
+}
+
+li, button {
+  font-family: 'Ubuntu', monospace, sans-serif;
+  text-decoration: none;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+li a, button a {
+  color: white;
+}
+
+section {
+  background-color: #222;
+  padding: 1%;
+  box-shadow: #000 0px 0px 10px;
+  border-radius: 10px;
+  margin-bottom: 1%;
+}
+
+#nav-links {
+  list-style: none;
+  width: 20rem;
+}
+
+#nav-links li {
+  display: inline-block;
+  padding: 0px 10px;
+}
+
+#nav-links li a {
+  transition: all 0.3s ease 0s;
+}
+
+#nav-links li a:hover {
+  color: #bbb;
+}
+
+#steam {
+  background-color: #77d;
+}
+
+#steam:hover {
+  background-color: #66d;
+}
+
+#xbox {
+  background-color: #5d5;
+}
+
+#xbox:hover {
+  background-color: #1d1;
+}
+
+.mini-profile {
+  background-color: #333;
+  display: flex;
+  align-content: space-between;
+  overflow: auto;
+  transition: all 0.3s ease 0s;
+}
+
+.mini-profile div {
+  margin: 0 3%;
+  align-self: center;
+}
+
+.mini-profile h1 {
+  float: left;
+  font-size: 400%;
+  align-self: center;
+  margin: 0 2%;
+}
+
+.mini-profile .user h2, .mini-profile .user h3 {
+  float: left;
+  font-size: 200%;
+  align-self: center;
+  margin: 0 2%;
+  text-align: left;
+}
+
+.mini-profile img {
+  border-radius: 50%;
+  width: 128px;
+  height: 128px;
+  margin: 0% 2%;
+}
+
+.mini-profile .align-right{
+  position: absolute;
+  right: 13%;
+}
+
+.mini-profile .align-right h2, .mini-profile .align-right h3 {
+  text-align: right;
+}
+
+.play {
+  width: 20rem;
+}
+
+.play button {
+  font-size: 1.5em;
+  padding: 3% 10%;
+  border-radius: 5px;
+  transition: all 0.3s ease 0s;
+}
+
+.play button:hover {
+  transition: all 0.3s ease 0s;
+}
