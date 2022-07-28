@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const fs = require("fs");
 
 router.get("/:password", async (req, res) => {
   const secrets = require("../secrets.json");
@@ -22,7 +23,7 @@ function claimBounty(password, claimerId, res) {
   if (!secrets[password]) {
     throw new Error("Invalid password.");
   }
-  if (db[secrets[password]].claimer) {
+  if (db[secrets[password]].config.claimer) {
     throw new Error("This password has already been claimed.");
   }
   if (secrets[password] === claimerId) {
@@ -32,8 +33,8 @@ function claimBounty(password, claimerId, res) {
   const config = require("../config.json")
   return client.guilds.fetch(config.guildId).then(async guild => {
     return guild.members.fetch(`${claimerId}`).then(member => {
-      db.users[secrets[password]].config.claimer = claimerId;
-      db.users[claimerId].config.claims++;
+      db[secrets[password]].config.claimer = claimerId;
+      db[claimerId].config.claims++;
       fs.writeFileSync("./db.json", JSON.stringify(db));
       if (res) {
         res.status(200).json({ message: "Successfully claimed!" });
