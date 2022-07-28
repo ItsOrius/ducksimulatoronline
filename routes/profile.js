@@ -11,7 +11,7 @@ async function getProfile(id, res) {
       profile.displayStyle = config.roleStyles[member.roles.highest.id]
       profile.inServer = true
       if (res) {
-        res.status(200).json({profile})
+        res.status(200).json(profile)
       }
       return profile;
     }).catch(e => {
