@@ -43,7 +43,7 @@ const routeFiles = fs.readdirSync(routesPath).filter(file => file.endsWith('.js'
 
 for (const file of routeFiles) {
 	// make app use router file
-	app.use(`/api/${file.replace('.js', '')}`, require(`${routesPath}/${file}`));
+	app.use(`/api/${file.replace('.js', '')}`, require(`${routesPath}/${file}`).router);
 }
 
 app.listen(process.env.PORT, () => {
