@@ -7,7 +7,7 @@ router.get("/:password", async (req, res) => {
     require("./profile.js").getProfile(secrets[password]).then(profile => {
       if (profile) {
         profile.id = secrets[password];
-        res.status(200).json(profile);
+        res.status(200).json({ profile });
       } else {
         res.status(500).json({ error: "Failed to get user profile!" });
       }
