@@ -22,7 +22,8 @@ function load(page) {
       const div = document.createElement('section');
       div.classList.add('mini-profile');
       parent.appendChild(div);
-      fetch("https://ducksimulator.com/api/profile/" + user.id).then(res => res.json()).then(profile => { 
+      fetch("https://ducksimulator.com/api/profile/" + user.id).then(res => res.json()).then(profile => {
+        profile = profile.profile;
         div.style = profile.displayStyle;
         div.innerHTML = `
           <h1>${getRankText(i + 1)}</h1>
