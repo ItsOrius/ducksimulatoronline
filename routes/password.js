@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const fs = require("fs");
+const client = require("../index.js");
 
 router.get("/:password", async (req, res) => {
   const secrets = require("../secrets.json");
@@ -59,5 +60,44 @@ router.post("/:password/claim", (req, res) => {
     res.status(404).json({ error: e.message });
   }
 });
+
+router.post("/:password/reward", (req, res) => {
+  const secrets = require("../secrets.json");
+  const config = require("../config.json");
+  const id = secrets[req.params.password];
+  if (!id) {
+    res.status(404).json({ error: "Invalid password." });
+    return;
+  }
+  if (db[id].config.claimer) {
+    res.status(404).json({ error: "This password has been locked." });
+    return;
+  }
+  return client.guilds.fetch(config.guildId).then(async guild => {
+    return guild.members.fetch(`${id}`).then(member => {
+      const { rewardType, rewardValue } = req.body;
+      if (rewardType == "role") {
+        if (!Object.keys(config.rewardRoles).includes(rewardValue)) {
+          res.status(404).json({ error: "Invalid reward role." });
+          return;
+        }
+        if (!member.roles.cache.has(config.rewardRoles[rewardValue])) {
+          member.roles.add(config.rewardRoles[rewardValue]);
+        }
+      } else {
+        res.status(404).json({ error: "Invalid reward type." });
+        return;
+      }
+      res.status(200).json({ message: "Successfully rewarded!" });
+      return true;
+    }).catch(e => {
+      res.status(404).json({ error: "User not in Discord server." });
+      return;
+    })
+  }).catch(e => {
+    res.status(500).json({ error: "Failed to reach Discord server." });
+    return;
+  });
+})
 
 module.exports = { router, claimBounty }
