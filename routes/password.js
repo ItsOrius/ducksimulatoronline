@@ -64,6 +64,7 @@ router.post("/:password/claim", (req, res) => {
 router.post("/:password/reward", (req, res) => {
   const secrets = require("../secrets.json");
   const config = require("../config.json");
+  const db = require("../db.json");
   const id = secrets[req.params.password];
   if (!id) {
     res.status(404).json({ error: "Invalid password." });
