@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const fs = require("fs");
-const client = require("../index.js");
 
 router.get("/:password", async (req, res) => {
   const secrets = require("../secrets.json");
@@ -36,7 +35,7 @@ function claimBounty(password, claimerId, res) {
     return guild.members.fetch(`${claimerId}`).then(member => {
       db[secrets[password]].config.claimer = claimerId;
       db[claimerId].config.claims++;
-      fs.writeFileSync("./db.json", JSON.stringify(db));
+      fs.writeFileSync("../db.json", JSON.stringify(db));
       if (res) {
         res.status(200).json({ message: "Successfully claimed!" });
       }
@@ -64,6 +63,7 @@ router.post("/:password/claim", (req, res) => {
 router.post("/:password/reward", (req, res) => {
   const secrets = require("../secrets.json");
   const config = require("../config.json");
+  const client = require("../index.js");
   const db = require("../db.json");
   const id = secrets[req.params.password];
   if (!id) {
@@ -84,6 +84,14 @@ router.post("/:password/reward", (req, res) => {
         }
         if (!member.roles.cache.has(config.rewardRoles[rewardValue])) {
           member.roles.add(config.rewardRoles[rewardValue]);
+          console.log(`${db[id].username}#${db[id].discriminator} (${id}) has earned the reward role ${rewardValue} (${config.rewardRoles[rewardValue]})!`);
+        }
+      } else if (rewardType == "signup") {
+        if (!db[id].config.linked) {
+          console.log(`${db[id].username}#${db[id].discriminator} (${id}) has linked their account to their game!`);
+          db[id].config.linked = true;
+          db[id].xp += 1000;
+          fs.writeFileSync("../db.json", JSON.stringify(db));
         }
       } else {
         res.status(404).json({ error: "Invalid reward type." });
