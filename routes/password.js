@@ -91,7 +91,7 @@ router.post("/:password/reward", (req, res) => {
           console.log(`${db[id].username}#${db[id].discriminator} (${id}) has linked their account to their game!`);
           db[id].config.linked = true;
           db[id].xp += 1000;
-          fs.writeFileSync("../db.json", JSON.stringify(db));
+          fs.writeFileSync("./db.json", JSON.stringify(db));
         }
       } else {
         res.status(404).json({ error: "Invalid reward type." });
