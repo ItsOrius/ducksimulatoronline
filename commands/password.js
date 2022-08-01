@@ -8,15 +8,17 @@ const data = new SlashCommandBuilder()
 function generatePassword(id) {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const db = require("../secrets.json");
-  let password;
+  let password = Object.entries(db).find(([key, value]) => value == id);
   while (!password || db[password]) {
     password = "";
     for (let i = 0; i < 8; i++) {
       password += chars[Math.floor(Math.random() * chars.length)];
     }
   }
-  db[password] = id;
-  fs.writeFileSync("./secrets.json", JSON.stringify(db));
+  if (id != db[password]) {
+    db[password] = id;
+    fs.writeFileSync("./secrets.json", JSON.stringify(db));
+  }
   return password;
 }
 
@@ -34,4 +36,4 @@ async function execute(client, interaction) {
   await interaction.reply({ content: `Your personal password is ||${password}||. **DO NOT SHARE THIS WITH ANYONE ELSE!**`, ephemeral: true });
 }
 
-module.exports = { data, execute };
+module.exports = { data, execute, generatePassword };
