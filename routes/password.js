@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { TimestampStyles } = require("@discordjs/builders");
 const Discord = require("discord.js");
 const e = require("express");
 const fs = require("fs");
@@ -132,6 +131,7 @@ router.post("/:password/reward", (req, res) => {
             const embed = new Discord.MessageEmbed()
               .setDescription(`${member.toString()} achieved a speedrun of **${timeString}**!`)
               .setColor(member.roles.color.color || config.botColor)
+              .setTimestamp();
             channel.send({ embeds: [embed] });
             console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of ${timeString}!`);
             res.status(200).json({ message: "Successfully submitted!" });
