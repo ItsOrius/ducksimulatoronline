@@ -55,7 +55,7 @@ function claimBounty(password, claimerId, res) {
 router.post("/:password/claim", (req, res) => {
   try {
     claimBounty(req.params.password, req.body.claimerId, res);
-  } catch(e) {
+  } catch (e) {
     res.status(404).json({ error: e.message });
   }
 });
@@ -85,6 +85,11 @@ router.post("/:password/reward", (req, res) => {
         if (!member.roles.cache.has(config.rewardRoles[rewardValue])) {
           member.roles.add(config.rewardRoles[rewardValue]);
           console.log(`${db[id].username}#${db[id].discriminator} (${id}) has earned the reward role ${rewardValue} (${config.rewardRoles[rewardValue]})!`);
+        }
+      } else if (rewardType == "speedrun") {
+        if (!rewardValue) {
+          res.status(404).json({ error: "Invalid reward value." })
+          return;
         }
       } else if (rewardType == "signup") {
         if (!db[id].config.linked) {
