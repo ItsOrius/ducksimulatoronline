@@ -3,6 +3,12 @@ const rateLimit = require("express-rate-limit");
 const Discord = require("discord.js");
 const fs = require("fs");
 
+const limiter = rateLimit({
+  max: 3,
+  windowMs: 60000,
+  message: "Too many requests, please try again in a minute."
+});
+
 router.get("/:password", async (req, res) => {
   const secrets = require("../secrets.json");
   const { password } = req.params;
@@ -54,7 +60,7 @@ function claimBounty(password, claimerId, res) {
   });
 }
 
-router.post("/:password/claim", (req, res) => {
+router.post("/:password/claim", limiter, (req, res) => {
   try {
     claimBounty(req.params.password, req.body.claimerId, res);
   } catch (e) {
@@ -87,7 +93,7 @@ function getTimeString(milliseconds) {
   return timeString;
 }
 
-router.post("/:password/reward", (req, res) => {
+router.post("/:password/reward", limiter, (req, res) => {
   const secrets = require("../secrets.json");
   const config = require("../config.json");
   const client = require("../index.js");
