@@ -88,6 +88,8 @@ router.post("/:password/reward", (req, res) => {
           member.roles.add(config.rewardRoles[rewardValue]);
           console.log(`${db[id].username}#${db[id].discriminator} (${id}) has earned the reward role ${rewardValue} (${config.rewardRoles[rewardValue]})!`);
         }
+        res.status(200).json({ message: "Successfully rewarded!" });
+        return true;
       } else if (rewardType == "speedrun") {
         if (!rewardValue) {
           res.status(404).json({ error: "Invalid reward value." })
@@ -96,20 +98,16 @@ router.post("/:password/reward", (req, res) => {
         const millis = rewardValue % 1000;
         const seconds = Math.floor(rewardValue / 1000) % 60;
         const minutes = Math.floor(rewardValue / 60000);
-        let isNewRecord = false;
-        if (!db[id].config.fastestSpeedrun || rewardValue < (db[id].config.fastestSpeedrun || 0)) {
-          db[id].config.fastestSpeedrun = rewardValue;
-          isNewRecord = true;
-          fs.writeFileSync("./db.json", JSON.stringify(db));
-        }
-        if (minutes < 10) {
+        if (minutes < 10 && !member.roles.cache.has(config.speedrunRole)) {
           member.roles.add(config.speedrunRole);
         }
-        if (isNewRecord) {
-          guild.channels.fetch(config.speedrunFeedChannel).then(channel => {
+        if (!db[id].config.fastestSpeedrun || rewardValue < (db[id].config.fastestSpeedrun || 0)) {
+          db[id].config.fastestSpeedrun = rewardValue;
+          fs.writeFileSync("./db.json", JSON.stringify(db));
+          guild.channels.fetch(config.speedrunFeedChannel.toString()).then(channel => {
             const embed = new Discord.MessageEmbed()
               .setDescription(`${member.toString()} achieved a speedrun of **${minutes}:${seconds}.${millis}**!`)
-              .setColor(member.roles.color || config.botColor)
+              .setColor(member.roles.color.color || config.botColor)
             channel.send({ embeds: [embed] });
             console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of **${minutes}:${seconds}.${millis}**!`);
             res.status(200).json({ message: "Successfully submitted!" });
@@ -123,13 +121,13 @@ router.post("/:password/reward", (req, res) => {
           db[id].config.linked = true;
           db[id].xp += 1000;
           fs.writeFileSync("./db.json", JSON.stringify(db));
+          res.status(200).json({ message: "Successfully rewarded!" });
+          return true;
         }
       } else {
         res.status(404).json({ error: "Invalid reward type." });
         return;
       }
-      res.status(200).json({ message: "Successfully rewarded!" });
-      return true;
     }).catch(e => {
       res.status(404).json({ error: "User not in Discord server." });
       return;
