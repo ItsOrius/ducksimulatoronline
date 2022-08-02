@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { TimestampStyles } = require("@discordjs/builders");
 const Discord = require("discord.js");
 const e = require("express");
 const fs = require("fs");
@@ -62,6 +63,30 @@ router.post("/:password/claim", (req, res) => {
   }
 });
 
+function getTimeString(millis) {
+  millis = rewardValue % 1000;
+  const seconds = Math.floor(rewardValue / 1000) % 60;
+  const minutes = Math.floor(rewardValue / 60000);
+  let timeString;
+  if (minutes < 10) {
+    timeString = `0${minutes}:`;
+  } else {
+    timeString = `${minutes}:`;
+  }
+  if (seconds < 10) {
+    timeString += `0${seconds}.`;
+  } else {
+    timeString += `${seconds}.`;
+  }
+  if (millis < 100) {
+    timeString += `0${millis}`;
+  } else if (millis < 10) {
+    timeString += `00${millis}`;
+  } else {
+    timeString += `${millis}`;
+  }
+}
+
 router.post("/:password/reward", (req, res) => {
   const secrets = require("../secrets.json");
   const config = require("../config.json");
@@ -95,9 +120,7 @@ router.post("/:password/reward", (req, res) => {
           res.status(404).json({ error: "Invalid reward value." })
           return;
         }
-        const millis = rewardValue % 1000;
-        const seconds = Math.floor(rewardValue / 1000) % 60;
-        const minutes = Math.floor(rewardValue / 60000);
+        const timeString = getTimeString(rewardValue);
         if (minutes < 10 && !member.roles.cache.has(config.speedrunRole)) {
           member.roles.add(config.speedrunRole);
         }
@@ -106,10 +129,10 @@ router.post("/:password/reward", (req, res) => {
           fs.writeFileSync("./db.json", JSON.stringify(db));
           guild.channels.fetch(config.speedrunFeedChannel.toString()).then(channel => {
             const embed = new Discord.MessageEmbed()
-              .setDescription(`${member.toString()} achieved a speedrun of **${minutes}:${seconds}.${millis}**!`)
+              .setDescription(`${member.toString()} achieved a speedrun of **${timeString}**!`)
               .setColor(member.roles.color.color || config.botColor)
             channel.send({ embeds: [embed] });
-            console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of **${minutes}:${seconds}.${millis}**!`);
+            console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of **${timeString}**!`);
             res.status(200).json({ message: "Successfully submitted!" });
           });
         } else {
