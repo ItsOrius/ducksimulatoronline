@@ -1,6 +1,6 @@
 const router = require("express").Router();
+const rateLimit = require("express-rate-limit");
 const Discord = require("discord.js");
-const e = require("express");
 const fs = require("fs");
 
 router.get("/:password", async (req, res) => {
@@ -77,12 +77,12 @@ function getTimeString(milliseconds) {
   } else {
     timeString += `${seconds}.`;
   }
-  if (millis < 100) {
-    timeString += `0${millis}`;
-  } else if (millis < 10) {
-    timeString += `00${millis}`;
-  } else {
+  if (millis > 100) {
     timeString += `${millis}`;
+  } else if (millis > 10) {
+    timeString += `0${millis}`;
+  } else {
+    timeString += `00${millis}`;
   }
   return timeString;
 }
