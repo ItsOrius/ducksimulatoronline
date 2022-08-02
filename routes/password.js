@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const Discord = require("discord.js");
+const e = require("express");
 const fs = require("fs");
 
 router.get("/:password", async (req, res) => {
@@ -90,6 +92,30 @@ router.post("/:password/reward", (req, res) => {
         if (!rewardValue) {
           res.status(404).json({ error: "Invalid reward value." })
           return;
+        }
+        const millis = rewardValue % 1000;
+        const seconds = Math.floor(rewardValue / 1000) % 60;
+        const minutes = Math.floor(rewardValue / 60000);
+        let isNewRecord = false;
+        if (!db[id].config.fastestSpeedrun || rewardValue < (db[id].config.fastestSpeedrun || 0)) {
+          db[id].config.fastestSpeedrun = rewardValue;
+          isNewRecord = true;
+          fs.writeFileSync("./db.json", JSON.stringify(db));
+        }
+        if (minutes < 10) {
+          member.roles.add(config.speedrunRole);
+        }
+        if (isNewRecord) {
+          guild.channels.fetch(config.speedrunFeedChannel).then(channel => {
+            const embed = new Discord.MessageEmbed()
+              .setDescription(`${member.toString()} achieved a speedrun of **${minutes}:${seconds}.${millis}**!`)
+              .setColor(member.roles.color || config.botColor)
+            channel.send({ embeds: [embed] });
+            console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of **${minutes}:${seconds}.${millis}**!`);
+            res.status(200).json({ message: "Successfully submitted!" });
+          });
+        } else {
+          res.status(200).json({ message: "Successfully submitted, but not a new personal best." });
         }
       } else if (rewardType == "signup") {
         if (!db[id].config.linked) {
