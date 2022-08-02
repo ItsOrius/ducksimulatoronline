@@ -63,10 +63,10 @@ router.post("/:password/claim", (req, res) => {
   }
 });
 
-function getTimeString(millis) {
-  millis = rewardValue % 1000;
-  const seconds = Math.floor(rewardValue / 1000) % 60;
-  const minutes = Math.floor(rewardValue / 60000);
+function getTimeString(milliseconds) {
+  const millis = milliseconds % 1000;
+  const seconds = Math.floor(milliseconds / 1000) % 60;
+  const minutes = Math.floor(milliseconds / 60000);
   let timeString;
   if (minutes < 10) {
     timeString = `0${minutes}:`;
@@ -85,6 +85,7 @@ function getTimeString(millis) {
   } else {
     timeString += `${millis}`;
   }
+  return timeString;
 }
 
 router.post("/:password/reward", (req, res) => {
@@ -121,7 +122,7 @@ router.post("/:password/reward", (req, res) => {
           return;
         }
         const timeString = getTimeString(rewardValue);
-        if (minutes < 10 && !member.roles.cache.has(config.speedrunRole)) {
+        if (rewardValue / 60000 < 10 && !member.roles.cache.has(config.speedrunRole)) {
           member.roles.add(config.speedrunRole);
         }
         if (!db[id].config.fastestSpeedrun || rewardValue < (db[id].config.fastestSpeedrun || 0)) {
@@ -132,7 +133,7 @@ router.post("/:password/reward", (req, res) => {
               .setDescription(`${member.toString()} achieved a speedrun of **${timeString}**!`)
               .setColor(member.roles.color.color || config.botColor)
             channel.send({ embeds: [embed] });
-            console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of **${timeString}**!`);
+            console.log(`${db[id].username}#${db[id].discriminator} (${id}) has achieved a speedrun of ${timeString}!`);
             res.status(200).json({ message: "Successfully submitted!" });
           });
         } else {
