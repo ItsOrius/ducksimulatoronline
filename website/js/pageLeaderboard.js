@@ -2,7 +2,7 @@ const parent = document.getElementById('leaderboard');
 parent.innerHTML = "";
 
 function getRankText(rank) {
-  switch(rank) {
+  switch (rank) {
     case 1:
       return `<div style="color: #ee0;">#1</div>`;
     case 2:
@@ -15,14 +15,14 @@ function getRankText(rank) {
 }
 
 function load(page) {
-  fetch("https://ducksimulator.com/api/leaderboard?page=" + page).then(res => res.text()).then(text => {
+  fetch("https://ducksimulator.com/api/v1/leaderboard?page=" + page).then(res => res.text()).then(text => {
     const orderedUsers = JSON.parse(text).users;
     for (let i = 0; i < 10; i++) {
       const user = orderedUsers[i];
       const div = document.createElement('section');
       div.classList.add('mini-profile');
       parent.appendChild(div);
-      fetch("https://ducksimulator.com/api/profile/" + user.id).then(res => res.json()).then(profile => {
+      fetch("https://ducksimulator.com/api/v1/profile/" + user.id).then(res => res.json()).then(profile => {
         div.style = profile.displayStyle;
         div.innerHTML = `
           <h1>${getRankText(i + 1)}</h1>
