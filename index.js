@@ -24,7 +24,7 @@ const pages = {
 }
 
 const redirects = {
-  "/discord": "https://discord.gg/XFZj7HJp46",
+  "/discord": "https://discord.com/servers/duck-simulator-908148295606628363",
   "/steam": "https://store.steampowered.com/app/1808800/Duck_Simulator_2/",
   "/xbox": "https://xbox.com/en-us/games/store/duck-simulator-2/9pkkrpblfqpk",
 }
