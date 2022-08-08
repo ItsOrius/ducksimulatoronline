@@ -64,7 +64,7 @@ function registerMessage(msg) {
   if (newLevel > oldLevel) {
     if (getShouldPingUser(user)) {
       // reply to msg with level up message
-      msg.reply({content: `Congratulations, ${user.toString()}! You've leveled up to level ${newLevel}!\n**P.S.** You can disable this message at any time by running \`\`/ping off\`\`.`});
+      msg.reply({ content: `Congratulations, ${user.toString()}! You've leveled up to level ${newLevel}!\n**P.S.** You can disable this message at any time by running \`\`/ping off\`\`.` });
     }
     console.log(`${user.tag} (${user.id}) has leveled up to level ${newLevel}!`);
     Object.entries(levelRoles).forEach(obj => {
@@ -72,7 +72,7 @@ function registerMessage(msg) {
         if (!msg.member.roles.cache.has(obj[1])) {
           const newRole = msg.member.guild.roles.cache.get(obj[1])
           msg.member.roles.add(newRole)
-          msg.reply({content: `Congratulations, ${user.toString()}! You just earned the \`\`${newRole.name}\`\` role!`})
+          msg.reply({ content: `Congratulations, ${user.toString()}! You just earned the \`\`${newRole.name}\`\` role!` })
           console.log(`${user.tag} (${user.id}) has unlocked the ${newRole.name} role!`)
         }
       }
@@ -125,7 +125,7 @@ function getOrderedUsers() {
  * @param {number} id
  * @returns number
  */
- function getRank(id) {
+function getRank(id) {
   // find user in ordered users
   const users = getOrderedUsers();
   for (let i = 0; i < users.length; i++) {
@@ -183,4 +183,4 @@ function getUserProfile(id) {
   return user;
 }
 
-module.exports = { registerMessage, getLevel, getRank, getOrderedUsers, setShouldPingUser, getUserProfile, getNeededXp };
+module.exports = { registerMessage, getLevel, getRank, getOrderedUsers, setShouldPingUser, getUserProfile, getNeededXp, UserProfile };

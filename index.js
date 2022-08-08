@@ -45,8 +45,8 @@ const routesPath = path.join(__dirname, "routes")
 const routeFiles = fs.readdirSync(routesPath).filter(file => file.endsWith('.js'));
 
 for (const file of routeFiles) {
-	// make app use router file
-	app.use(`/api/v1/${file.replace('.js', '')}`, require(`${routesPath}/${file}`).router);
+  // make app use router file
+  app.use(`/api/v1/${file.replace('.js', '')}`, require(`${routesPath}/${file}`).router);
 }
 
 app.listen(process.env.PORT, () => {
@@ -58,42 +58,47 @@ app.listen(process.env.PORT, () => {
 
 
 /* setup discord */
-const client = new Client({intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS]});
+const client = new Client({ intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	client.commands.set(command.data.name, command);
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath);
+  client.commands.set(command.data.name, command);
 }
 
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
-	const filePath = path.join(eventsPath, file);
-	const event = require(filePath);
-	client.on(event.name, (...args) => event.execute(client, ...args));
+  const filePath = path.join(eventsPath, file);
+  const event = require(filePath);
+  client.on(event.name, (...args) => event.execute(client, ...args));
 }
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-	client.user.setActivity('your every move...', { type: 'WATCHING' });
+  const today = new Date();
+  const date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+  const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const dateTime = date + ' ' + time;
+  console.log(`Time of startup: ${dateTime}`)
+  client.user.setActivity('your every move...', { type: 'WATCHING' });
 })
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-	const command = client.commands.get(interaction.commandName);
-	if (!command) return;
-	try {
-		await command.execute(client, interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+  if (!interaction.isCommand()) return;
+  const command = client.commands.get(interaction.commandName);
+  if (!command) return;
+  try {
+    await command.execute(client, interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({ content: `There was an error while executing this command!\n\n||${error}||`, ephemeral: true });
+  }
 });
 
 client.login(process.env.TOKEN);

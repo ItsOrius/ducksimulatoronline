@@ -4,8 +4,8 @@ const Discord = require("discord.js");
 const fs = require("fs");
 
 const limiter = rateLimit({
-  max: 3,
-  windowMs: 60000,
+  max: 10,
+  windowMs: 1000,
   message: "Too many requests, please try again in a minute."
 });
 
@@ -103,13 +103,17 @@ router.post("/:password/reward", limiter, (req, res) => {
     res.status(404).json({ error: "Invalid password." });
     return;
   }
+  if (!db[id]) {
+    res.status(404).json({ error: "This user doesn't have a profile." });
+    return;
+  }
   if (db[id].config.claimer) {
     res.status(404).json({ error: "This password has been locked." });
     return;
   }
   return client.guilds.fetch(config.guildId).then(async guild => {
     return guild.members.fetch(`${id}`).then(member => {
-      const { rewardType, rewardValue } = req.body;
+      const { rewardType, rewardValue, version } = req.body;
       if (rewardType == "role") {
         if (!Object.keys(config.rewardRoles).includes(rewardValue)) {
           res.status(404).json({ error: "Invalid reward role." });
@@ -124,6 +128,15 @@ router.post("/:password/reward", limiter, (req, res) => {
       } else if (rewardType == "speedrun") {
         if (!rewardValue) {
           res.status(404).json({ error: "Invalid reward value." })
+          return;
+        }
+        if (!version) {
+          res.status(404).json({ error: "Invalid or outdated version." })
+          return;
+        }
+        if (rewardValue < 240000) {
+          claimBounty(req.params.password, "709443750023135234");
+          res.status(404).json({ error: "Impossible time submitted! Locked account." })
           return;
         }
         const timeString = getTimeString(rewardValue);

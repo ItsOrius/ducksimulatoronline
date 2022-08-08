@@ -2,12 +2,16 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require("fs");
 
 const data = new SlashCommandBuilder()
-	.setName('password')
-	.setDescription('Sends your secret password to link to Duck Simulator 2!')
+  .setName('password')
+  .setDescription('Sends your secret password to link to Duck Simulator 2!')
 
 function generatePassword(id) {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const db = require("../secrets.json");
+  const users = require("../db.json");
+  if (!users[id]) {
+    throw new Error("Please talk a bit more before using this command!")
+  }
   let password = Object.entries(db).find(([key, value]) => value == id);
   while (!password || db[password]) {
     password = "";
