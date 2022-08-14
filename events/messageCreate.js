@@ -1,4 +1,3 @@
-const config = require("./config.json");
 const Discord = require('discord.js');
 const name = 'messageCreate';
 
@@ -10,6 +9,7 @@ const lastMessages = {}
  */
 function execute(client, msg) {
   if (msg.author.bot) return;
+  const config = require("../config.json");
   if (msg.channel.id == config.suggestionsChannel) {
     const embed = new Discord.MessageEmbed()
       .setTitle("Suggestion #" + (msg.channel.messageCount + 1))
@@ -17,7 +17,7 @@ function execute(client, msg) {
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
     msg.delete();
-    msg.channel.send(embed).then(message => {
+    msg.channel.send({ embeds: [embed] }).then(message => {
       message.react("⬆️").then(() => message.react("⬇️"));
     }).catch(console.error);
   }
