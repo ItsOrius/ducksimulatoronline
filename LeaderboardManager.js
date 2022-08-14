@@ -88,7 +88,7 @@ function getLevel(xp) {
   let level = 0;
   let stop = false;
   while (!stop) {
-    if (xp >= Math.floor((5 * ((1.5) ** (level + 1))))) {
+    if (xp >= Math.floor((5 * ((1.47) ** (level + 1))))) {
       level++;
     } else {
       stop = true;
@@ -102,7 +102,7 @@ function getLevel(xp) {
  * @returns number
  */
 function getNeededXp(level) {
-  return Math.floor(5 * ((1.5) ** (level)));
+  return Math.floor(5 * ((1.47) ** (level)));
 }
 
 function getOrderedUsers() {
