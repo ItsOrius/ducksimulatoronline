@@ -10,9 +10,9 @@ const lastMessages = {}
 function execute(client, msg) {
   if (msg.author.bot) return;
   const config = require("../config.json");
-  if (msg.channel.id == config.suggestionsChannel) {
+  if (msg.channelId == config.suggestionsChannel) {
     const embed = new Discord.MessageEmbed()
-      .setTitle("Suggestion #" + (msg.channel.messageCount + 1))
+      .setTitle("Suggestion")
       .setDescription(msg.content)
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
