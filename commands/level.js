@@ -22,7 +22,7 @@ async function execute(client, interaction) {
   }
   const embed = new Discord.MessageEmbed()
     .setTitle(`${user.tag}'s Level`)
-    .setDescription(`**Level:** ${profile.level}\n**XP:** ${profile.xp}/${profile.nextLevelXp}`)
+    .setDescription(`**Level:** ${profile.level}\n**XP:** ${profile.xp}\n**Progress:** ${profile.xp - manager.getNeededXp(profile.level - 1)}/${profile.nextLevelXp - manager.getNeededXp(profile.level)}`)
     .setColor(interaction.member.displayHexColor)
   await interaction.reply({ embeds: [embed], ephemeral: true });
 }
