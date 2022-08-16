@@ -81,6 +81,14 @@ function registerMessage(msg) {
 }
 
 /**
+ * @param {number} level 
+ * @returns number
+ */
+function getNeededXp(level) {
+  return Math.floor(50 * ((1.3) ** (level)));
+}
+
+/**
  * @param {number} xp
  * @returns number
  */
@@ -88,21 +96,13 @@ function getLevel(xp) {
   let level = 0;
   let stop = false;
   while (!stop) {
-    if (xp >= Math.floor((5 * ((1.47) ** (level + 1))))) {
+    if (xp >= getNeededXp(level+1)) {
       level++;
     } else {
       stop = true;
     }
   }
   return level;
-}
-
-/**
- * @param {number} level 
- * @returns number
- */
-function getNeededXp(level) {
-  return Math.floor(5 * ((1.47) ** (level)));
 }
 
 function getOrderedUsers() {
