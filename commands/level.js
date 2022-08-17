@@ -22,8 +22,8 @@ async function execute(client, interaction) {
     };
   }
   const nextReward = { level: -1, id: -1 };
-  for (let i = 0; i < Object.keys(levelRoles); i++) {
-    if (profile.level < Object.keys(levelRoles)[i]) {
+  for (let i = 0; i < Object.keys(levelRoles).length; i++) {
+    if (profile.level < parseFloat(Object.keys(levelRoles)[i])) {
       nextReward.level = Object.keys(levelRoles)[i]
       nextReward.id = Object.values(levelRoles)[i];
       break;
