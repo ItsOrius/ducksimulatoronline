@@ -24,15 +24,19 @@ function execute(client, msg) {
         fs.mkdirSync(path.join(__dirname, `../website/uploads/${msg.author.id}`), { recursive: true });
       }
       const filePath = path.join(__dirname, "../website/uploads/" + msg.author.id + "/" + msg.id + ".png");
-      // download image to filePath and only then set the image
       request(msg.attachments.first().url).pipe(fs.createWriteStream(filePath)).on("close", () => {
         embed.setImage(`https://${config.domain}/uploads/${msg.author.id}/${msg.id}.png`);
+        msg.delete();
+        msg.channel.send({ embeds: [embed] }).then(message => {
+          message.react("⬆️").then(() => message.react("⬇️"));
+        }).catch(console.error);
       });
+    } else {
+      msg.delete();
+      msg.channel.send({ embeds: [embed] }).then(message => {
+        message.react("⬆️").then(() => message.react("⬇️"));
+      }).catch(console.error);
     }
-    msg.delete();
-    msg.channel.send({ embeds: [embed] }).then(message => {
-      message.react("⬆️").then(() => message.react("⬇️"));
-    }).catch(console.error);
   }
   const lastMessage = lastMessages[msg.author.id] != null ? lastMessages[msg.author.id] : 0;
   lastMessages[msg.author.id] = msg;
