@@ -3,3 +3,4 @@ db.json
 secrets.json
 node_modules/
 website/uploads/*
+replit.nix
