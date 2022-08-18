@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const request = require('request');
+const fs = require('fs');
 const name = 'messageCreate';
 
 const lastMessages = {}
@@ -17,7 +19,11 @@ function execute(client, msg) {
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
     if (msg.attachments.size > 0) {
-      embed.setImage(msg.attachments.first().url);
+      const url = msg.attachments.first().url;
+      const fileName = msg.author.id + "/" + url.split("/").pop()
+      const filePath = "../website/uploads/" + fileName
+      request(url).pipe(fs.createWriteStream(filePath));
+      embed.setImage(fs.readFileSync(filePath));
     }
     msg.delete();
     msg.channel.send({ embeds: [embed] }).then(message => {
