@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const request = require('request');
+const path = require('path');
 const fs = require('fs');
 const name = 'messageCreate';
 
@@ -19,13 +20,11 @@ function execute(client, msg) {
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
     if (msg.attachments.size > 0) {
-      if (!fs.existsSync(`../websites/uploads/${msg.author.id}`)) {
-        fs.mkdirSync(`../websites/uploads/${msg.author.id}`);
+      if (!fs.existsSync(path.join(__dirname, `../website/uploads/${msg.author.id}`))) {
+        fs.mkdirSync(path.join(__dirname, `../website/uploads/${msg.author.id}`), { recursive: true });
       }
-      const url = msg.attachments.first().url;
-      const fileName = msg.author.id + "/" + url.split("/").pop()
-      const filePath = "../website/uploads/" + fileName
-      request(url).pipe(fs.createWriteStream(filePath));
+      const filePath = path.join(__dirname, "../website/uploads/" + msg.author.id + "/" + msg.id + ".png");
+      request(msg.attachments.first().url).pipe(fs.createWriteStream(filePath));
       embed.setImage(fs.readFileSync(filePath));
     }
     msg.delete();
