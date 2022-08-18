@@ -19,6 +19,9 @@ function execute(client, msg) {
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
     if (msg.attachments.size > 0) {
+      if (!fs.existsSync(`../websites/uploads/${msg.author.id}`)) {
+        fs.mkdirSync(`../websites/uploads/${msg.author.id}`);
+      }
       const url = msg.attachments.first().url;
       const fileName = msg.author.id + "/" + url.split("/").pop()
       const filePath = "../website/uploads/" + fileName
