@@ -24,8 +24,10 @@ function execute(client, msg) {
         fs.mkdirSync(path.join(__dirname, `../website/uploads/${msg.author.id}`), { recursive: true });
       }
       const filePath = path.join(__dirname, "../website/uploads/" + msg.author.id + "/" + msg.id + ".png");
-      request(msg.attachments.first().url).pipe(fs.createWriteStream(filePath));
-      embed.setImage(fs.readFileSync(filePath));
+      // download image to filePath and only then set the image
+      request(msg.attachments.first().url).pipe(fs.createWriteStream(filePath)).on("close", () => {
+        embed.setImage(`https://${config.domain}/uploads/${msg.author.id}/${msg.id}.png`);
+      });
     }
     msg.delete();
     msg.channel.send({ embeds: [embed] }).then(message => {
