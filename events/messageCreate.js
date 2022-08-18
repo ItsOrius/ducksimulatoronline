@@ -16,6 +16,9 @@ function execute(client, msg) {
       .setDescription(msg.content)
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
+    if (msg.attachments.size > 0) {
+      embed.setImage(msg.attachments.first().url);
+    }
     msg.delete();
     msg.channel.send({ embeds: [embed] }).then(message => {
       message.react("⬆️").then(() => message.react("⬇️"));
