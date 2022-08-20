@@ -35,10 +35,10 @@ function getBestPremiumStatus(member) {
 function execute(client, oldMember, newMember) {
   const premiumStatus = getBestPremiumStatus(newMember);
   const db = require("../db.json");
-  if (!db[member.id]) {
-    db[member.id] = new manager.UserProfile(member.user.username, member.user.discriminator, member.user.avatarURL(), 0, 0, {});
+  if (!db[newMember.id]) {
+    db[newMember.id] = new manager.UserProfile(newMember.user.username, newMember.user.discriminator, newMember.user.avatarURL(), 0, 0, {});
   }
-  if (premiumStatus <= db[member.id].highestPremium) {
+  if (premiumStatus <= db[newMember.id].highestPremium) {
     return;
   }
   db[newMember.id].premiumStatus = premiumStatus;
