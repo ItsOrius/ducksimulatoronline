@@ -2,6 +2,10 @@ const Discord = require('discord.js');
 const fs = require("fs");
 const name = 'guildMemberUpdate';
 
+/**
+ * @param {Discord.GuildMember} member 
+ * @returns 
+ */
 function getBestPremiumStatus(member) {
   const db = require("../db.json");
   const { premiumRoles } = require("../config.json");
