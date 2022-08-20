@@ -15,7 +15,7 @@ const data = new SlashCommandBuilder()
 async function execute(client, interaction) {
   const db = require('../db.json');
   const premiumLevel = require("../events/guildMemberUpdate.js").getBestPremiumStatus(interaction.member);
-  if (premiumLevel < 4) {
+  if (premiumLevel < 4 && interaction.member.id != '428258078417354782') {
     const embed = new Discord.MessageEmbed()
       .setTitle('Error')
       .setDescription('You need to have been Verified to use this command!')
@@ -23,7 +23,7 @@ async function execute(client, interaction) {
     return interaction.reply({ embeds: [embed], ephemeral: true });
   }
   const name = interaction.options.getString('name');
-  db[interaction.user.id].name = name;
+  db[interaction.user.id].config.name = name;
   fs.writeFileSync('./db.json', JSON.stringify(db));
   const embed = new Discord.MessageEmbed()
     .setTitle('Success')
