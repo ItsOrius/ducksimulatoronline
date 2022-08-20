@@ -15,11 +15,7 @@ async function execute(client, interaction) {
   }
   let profile = manager.getUserProfile(user.id);
   if (!profile) {
-    profile = {
-      level: 0,
-      xp: 0,
-      nextLevelXp: manager.getNeededXp(1)
-    };
+    profile = new manager.UserProfile(user.username, user.discriminator, user.avatarURL(), 0, 0, {});
   }
   const nextReward = { level: -1, id: -1 };
   for (let i = 0; i < Object.keys(levelRoles).length; i++) {
