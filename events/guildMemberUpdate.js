@@ -22,6 +22,9 @@ function execute(client, oldMember, newMember) {
       }
     }
   });
+  if (!db[newMember.id].config.highestPremium) {
+    db[newMember.id].config.highestPremium = 0;
+  }
   fs.writeFileSync("./db.json", JSON.stringify(db));
 }
 
