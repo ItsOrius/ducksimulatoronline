@@ -101,6 +101,8 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+client.on('debug', console.log);
+
 client.login(process.env.TOKEN);
 
 module.exports = client
