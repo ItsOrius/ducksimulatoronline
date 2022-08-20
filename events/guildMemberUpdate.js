@@ -42,7 +42,7 @@ function execute(client, oldMember, newMember) {
   if (premiumStatus <= db[newMember.id].highestPremium) {
     return;
   }
-  if (premiumStatus >= 2) {
+  if (premiumStatus >= 3) {
     newMember.roles.add(newMember.guild.roles.cache.get(config.earlySupporterRole));
   }
   db[newMember.id].premiumStatus = premiumStatus;
