@@ -35,11 +35,15 @@ function getBestPremiumStatus(member) {
 function execute(client, oldMember, newMember) {
   const premiumStatus = getBestPremiumStatus(newMember);
   const db = require("../db.json");
+  const config = require("../config.json");
   if (!db[newMember.id]) {
     db[newMember.id] = new manager.UserProfile(newMember.user.username, newMember.user.discriminator, newMember.user.avatarURL(), 0, 0, {});
   }
   if (premiumStatus <= db[newMember.id].highestPremium) {
     return;
+  }
+  if (premiumStatus >= 2) {
+    newMember.roles.add(newMember.guild.roles.cache.get(config.earlySupporterRole));
   }
   db[newMember.id].premiumStatus = premiumStatus;
   fs.writeFileSync("./db.json", JSON.stringify(db));
