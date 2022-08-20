@@ -14,16 +14,16 @@ function execute(client, oldMember, newMember) {
   if (!db[newMember.id]) {
     db[newMember.id] = new manager.UserProfile(newMember.user.username, newMember.user.discriminator, newMember.user.avatarURL(), 0, 0, {});
   }
-  const premiumStatus = db[newMember.id].config.highestPremium || 0;
+  const premiumStatus = db[newMember.id].highestPremium || 0;
   Object.entries(premiumRoles).forEach(role => {
     if (newMember.roles.cache.has(role[0])) {
       if (premiumStatus < parseFloat(role[1])) {
-        db[newMember.id].config.highestPremium = parseFloat(role[1]);
+        db[newMember.id].highestPremium = parseFloat(role[1]);
       }
     }
   });
-  if (!db[newMember.id].config.highestPremium) {
-    db[newMember.id].config.highestPremium = 0;
+  if (!db[newMember.id].highestPremium) {
+    db[newMember.id].highestPremium = 0;
   }
   fs.writeFileSync("./db.json", JSON.stringify(db));
 }
