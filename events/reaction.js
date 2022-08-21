@@ -20,6 +20,10 @@ async function execute(client, reaction, user) {
   if (message.embeds[0].footer) embed.setFooter(message.embeds[0].footer);
   if (message.embeds[0].timestamp) embed.setTimestamp(message.embeds[0].timestamp);
   if (message.embeds[0].image) embed.setImage(message.embeds[0].image.url);
+  const red = Math.floor(255 * (1 - ratio));
+  const green = Math.floor(255 * ratio);
+  const color = `#${red.toString(16)}${green.toString(16)}55`;
+  embed.setColor(color);
   if (ratio > 0.5) {
     embed.setColor("GREEN");
   } else if (ratio < 0.5) {
