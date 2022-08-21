@@ -11,7 +11,7 @@ const data = new SlashCommandBuilder()
  * @param {Discord.Client} client 
  * @param {Discord.Interaction} interaction 
  */
-async function execute(client, interaction) {
+function execute(client, interaction) {
   const db = require('../db.json');
   const premiumLevel = require("../events/guildMemberUpdate.js").getBestPremiumStatus(interaction.member);
   if (premiumLevel < 4) {
