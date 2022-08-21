@@ -8,14 +8,13 @@ const data = new SlashCommandBuilder()
   .addStringOption(option => option.setName('name').setDescription('The name to use.').setRequired(true))
 
 /**
- * 
  * @param {Discord.Client} client 
  * @param {Discord.Interaction} interaction 
  */
 async function execute(client, interaction) {
   const db = require('../db.json');
   const premiumLevel = require("../events/guildMemberUpdate.js").getBestPremiumStatus(interaction.member);
-  if (premiumLevel < 4 && interaction.member.id != '428258078417354782') {
+  if (premiumLevel < 4) {
     const embed = new Discord.MessageEmbed()
       .setTitle('Error')
       .setDescription('You need to have been Verified to use this command!')

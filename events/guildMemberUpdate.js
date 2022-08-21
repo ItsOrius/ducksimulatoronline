@@ -45,6 +45,9 @@ function execute(client, oldMember, newMember) {
   if (premiumStatus >= 3) {
     newMember.roles.add(newMember.guild.roles.cache.get(config.earlySupporterRole));
   }
+  if (!db[newMember.id].firstPremium && premiumStatus >= 2) {
+    db[newMember.id].firstPremium = new Date();
+  }
   db[newMember.id].premiumStatus = premiumStatus;
   fs.writeFileSync("./db.json", JSON.stringify(db));
 }
