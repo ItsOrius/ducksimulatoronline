@@ -26,6 +26,7 @@ async function execute(client, reaction, user) {
   } else {
     embed.setColor(config.botColor);
   }
+  if (embed.color == message.embeds[0].color) return;
   reaction.message.edit({ embeds: [embed] });
 }
 
