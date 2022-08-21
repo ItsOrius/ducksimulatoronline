@@ -12,8 +12,8 @@ function execute(client, reaction, user) {
   if (user.id == client.user.id) return;
   const message = reaction.message;
   const reactions = message.reactions.cache;
-  const yesReaction = reactions.find(reaction => reaction.emoji.name == '⬆️');
-  const noReaction = reactions.find(reaction => reaction.emoji.name == '⬇️');
+  const yesReaction = reactions.get("⬆️");
+  const noReaction = reactions.get("⬇️");;
   const ratio = reactions.get(yesReaction.emoji.id).count / reactions.get(noReaction.emoji.id).count
   if (ratio > 1) {
     reaction.message.edit({ embeds: [{ title: message.embeds[0].title, description: message.embeds[0].description, color: "GREEN", image: message.embeds[0].image.url }] });
