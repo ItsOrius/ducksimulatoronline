@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const name = 'guildMemberAdd';
+const names = ['guildMemberAdd'];
 
 const passwordCommand = require('../commands/password.js');
 
@@ -14,4 +14,4 @@ function execute(client, member) {
   //channel.send({ content: `**Welcome to the official Duck Simulator server!**\nYour personal password is ||${password}||. **DO NOT SHARE THIS WITH ANYONE ELSE!**` });
 }
 
-module.exports = { name, execute };
+module.exports = { names, execute };

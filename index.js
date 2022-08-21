@@ -76,7 +76,9 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
   const event = require(filePath);
-  client.on(event.name, (...args) => event.execute(client, ...args));
+  event.names.forEach(name => {
+    client.on(name, (...args) => event.execute(client, ...args));
+  });
 }
 
 client.once('ready', () => {

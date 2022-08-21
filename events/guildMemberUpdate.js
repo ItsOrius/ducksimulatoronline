@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require("fs");
-const name = 'guildMemberUpdate';
+const names = ['guildMemberUpdate'];
 
 /**
  * @param {Discord.GuildMember} member 
@@ -52,4 +52,4 @@ function execute(client, oldMember, newMember) {
   fs.writeFileSync("./db.json", JSON.stringify(db));
 }
 
-module.exports = { name, execute, getBestPremiumStatus };
+module.exports = { names, execute, getBestPremiumStatus };
