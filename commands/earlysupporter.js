@@ -24,6 +24,9 @@ function execute(client, interaction) {
       .setColor("RED");
     return interaction.reply({ embeds: [embed], ephemeral: true });
   }
+  const db = require("../db.json");
+  db[interaction.member.id].firstPremium = new Date();
+  fs.writeFileSync("./db.json", JSON.stringify(db));
   const config = require("../config.json");
   interaction.member.roles.add(interaction.guild.roles.cache.get(config.earlySupporterRole));
   const embed = new Discord.MessageEmbed()

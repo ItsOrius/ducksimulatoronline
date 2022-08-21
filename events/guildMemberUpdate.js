@@ -42,7 +42,7 @@ function execute(client, oldMember, newMember) {
   if (premiumStatus <= db[newMember.id].highestPremium) {
     return;
   }
-  if (!db[newMember.id].firstPremium && premiumStatus >= 2) {
+  if (!db[newMember.id].firstPremium && premiumStatus >= 3) {
     db[newMember.id].firstPremium = new Date();
   }
   if (premiumStatus >= 3 || (premiumStatus >= 2 && new Date() - new Date(db[newMember.id].firstPremium) >= 86400000)) {
