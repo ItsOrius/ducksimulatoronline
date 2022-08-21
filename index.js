@@ -58,7 +58,7 @@ app.listen(process.env.PORT, () => {
 
 
 /* setup discord */
-const client = new Client({ intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
