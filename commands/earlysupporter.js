@@ -1,14 +1,15 @@
+const fs = require('fs');
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const data = new SlashCommandBuilder()
-	.setName('earlysupporter')
-	.setDescription('Use this command to get the Early Supporter role if you\'re a premium member.')
+  .setName('earlysupporter')
+  .setDescription('Use this command to get the Early Supporter role if you\'re a premium member.')
 
 /**
- * @param {Discord.Client} client 
- * @param {Discord.Interaction} interaction 
- */
+  * @param {Discord.Client} client 
+  * @param {Discord.Interaction} interaction 
+*/
 function execute(client, interaction) {
   const premiumLevel = require("../events/guildMemberUpdate.js").getBestPremiumStatus(interaction.member);
   if (premiumLevel < 2) {
