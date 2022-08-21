@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const request = require('request');
 const path = require('path');
 const fs = require('fs');
-const name = 'messageCreate';
+const names = ['messageCreate'];
 
 const lastMessages = {}
 
@@ -52,4 +52,4 @@ function execute(client, msg) {
   leaderboard.registerMessage(msg)
 }
 
-module.exports = { name, execute };
+module.exports = { names, execute };

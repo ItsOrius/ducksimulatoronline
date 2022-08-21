@@ -4,7 +4,11 @@ const data = new SlashCommandBuilder()
 	.setName('commandname')
 	.setDescription('This is a description!')
 
-async function execute(client, interaction) {
+/**
+ * @param {Discord.Client} client 
+ * @param {Discord.Interaction} interaction 
+ */
+function execute(client, interaction) {
   // code stuff
 }
 
