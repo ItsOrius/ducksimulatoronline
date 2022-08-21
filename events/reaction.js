@@ -3,7 +3,7 @@ const names = ["messageReactionAdd", "messageReactionRemove"];
 
 /**
  * @param {Discord.Client} client
- * @param {Discord.MessageReaction} reaction
+ * @param {Discord.PartialMessageReaction} reaction
  * @param {Discord.User} user
  */
 function execute(client, reaction, user) {
