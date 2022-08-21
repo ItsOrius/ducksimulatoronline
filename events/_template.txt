@@ -1,5 +1,8 @@
 const name = 'eventName';
 
+/**
+ * @param {Discord.Client} client
+ */
 function execute(client) {
   // code stuff
 }

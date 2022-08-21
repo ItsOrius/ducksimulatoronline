@@ -6,7 +6,7 @@ const data = new SlashCommandBuilder()
   .addBooleanOption(option => option.setName('value').setDescription('Whether or not you want to be pinged when you level up.').setRequired(true));
 
 /**
- * 
+ * @param {Discord.Client} client 
  * @param {Discord.Interaction} interaction 
  */
 async function execute(client, interaction) {

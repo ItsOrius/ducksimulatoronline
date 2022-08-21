@@ -26,6 +26,10 @@ function generatePassword(id) {
   return password;
 }
 
+/**
+ * @param {Discord.Client} client 
+ * @param {Discord.Interaction} interaction 
+ */
 async function execute(client, interaction) {
   const db = require("../secrets.json");
   let password;

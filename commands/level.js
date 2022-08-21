@@ -6,6 +6,10 @@ const data = new SlashCommandBuilder()
   .setDescription('Replies with a user\'s level and XP.')
   .addUserOption(option => option.setName('user').setDescription('The user to check the level of.'))
 
+/**
+ * @param {Discord.Client} client 
+ * @param {Discord.Interaction} interaction 
+ */
 async function execute(client, interaction) {
   const manager = require('../LeaderboardManager');
   const { levelRoles } = require('../config.json');

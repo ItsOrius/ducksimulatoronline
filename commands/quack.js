@@ -4,8 +4,12 @@ const data = new SlashCommandBuilder()
 	.setName('quack')
 	.setDescription('Quack!')
 
-async function execute(client, interaction) {
-  await interaction.reply({ content: 'Quack!', ephemeral: true });
+/**
+ * @param {Discord.Client} client 
+ * @param {Discord.Interaction} interaction 
+ */
+function execute(client, interaction) {
+  interaction.reply({ content: 'Quack!', ephemeral: true });
 }
 
 module.exports = { data, execute };
