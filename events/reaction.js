@@ -12,7 +12,7 @@ function execute(client, reaction, user) {
   if (user.id == client.user.id) return;
   const message = reaction.message;
   const reactions = message.reactions.cache;
-  const ratio = reactions.get("⬆️").count / reactions.get("⬇️").count
+  const ratio = reactions.find(e => e.emoji.name == "⬆️").count / reactions.find(e => e.emoji.name == "⬇️").count;
   if (ratio > 1) {
     reaction.message.edit({ embeds: [{ title: message.embeds[0].title, description: message.embeds[0].description, color: "GREEN", image: message.embeds[0].image.url }] });
   } else if (ratio < 1) {
