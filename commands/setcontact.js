@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const data = new SlashCommandBuilder()
 	.setName('setcontact')
-	.setDescription("If you've ever been a premium member, you give us an alternate way to contact you for your rewards when they're ready!")
+	.setDescription("If you've ever been premium, give us an alternate way to contact you for rewards when they're ready!")
   .addStringOption(option => option.setName('contact').setDescription('Tell us how to contact you, such as through a personal website or alt account.').setRequired(true))
 
 /**
