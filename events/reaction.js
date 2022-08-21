@@ -6,15 +6,14 @@ const names = ["messageReactionAdd", "messageReactionRemove"];
  * @param {Discord.PartialMessageReaction} reaction
  * @param {Discord.User} user
  */
-function execute(client, reaction, user) {
+async function execute(client, reaction, user) {
+  await reaction.fetch();
   const config = require('../config.json');
   if (reaction.message.channelId != config.suggestionsChannel) return;
   if (user.id == client.user.id) return;
   const message = reaction.message;
-  console.log("new reaction on suggestion found");
   message.awaitReactions().then(collected => {
     const reactions = collected.array();
-    console.log(reactions);
     const yesReaction = reactions.find(reaction => reaction.emoji.name == "⬆️");
     const noReaction = reactions.find(reaction => reaction.emoji.name == "⬇️");
     const ratio = yesReaction.count / (yesReaction.count + noReaction.count);
