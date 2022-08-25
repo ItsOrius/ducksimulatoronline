@@ -14,16 +14,16 @@ function execute(client, msg) {
   if (msg.author.bot) return;
   const config = require("../config.json");
   const channels = config.suggestionsChannels;
-  let isSuggestion = false;
+  let suggestion = false;
   for (let i = 0; i < channels.length; i++) {
     if (msg.channel.id == channels[i].id) {
-      isSuggestion = i;
+      suggestion = i;
       break;
     }
   }
-  if (isSuggestion != false) {
+  if (suggestion != false) {
     const embed = new Discord.MessageEmbed()
-      .setTitle(channels[i].title)
+      .setTitle(channels[suggestion].title)
       .setDescription(msg.content)
       .setColor(config.botColor)
       .setFooter({ text: "Suggested by " + msg.author.tag + " | User ID: " + msg.author.id, iconURL: msg.author.displayAvatarURL() });
@@ -41,12 +41,12 @@ function execute(client, msg) {
       });
     } else {
       msg.delete();
-      if (!channels[i].requiresImage) {
+      if (!channels[suggestion].requiresImage) {
         msg.channel.send({ embeds: [embed] }).then(message => {
           message.react("⬆️").then(() => message.react("⬇️"));
         }).catch(console.error);
       } else {
-        msg.member.send({content: "You need to attach an image with your submission!"});
+        //msg.member.send({ content: "You need to attach an image with your submission!" });
         return;
       }
     }
