@@ -46,5 +46,16 @@
   "earlySupporterRole": "1008505615863255043",
   "speedrunRole": "1001312314038951976",
   "speedrunFeedChannel": "1004031016597454928",
-  "suggestionsChannel": "1008238572077318236"
+  "suggestionsChannels": [
+    {
+      "id": "1008238572077318236",
+      "title": "Suggestion",
+      "requiresImage": false
+    },
+    {
+      "id": "1012186793359188018",
+      "title": "Duck Submission",
+      "requiresImage": true
+    }
+  ]
 }
