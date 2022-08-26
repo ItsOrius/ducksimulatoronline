@@ -11,7 +11,7 @@ async function execute(client, reaction, user) {
   const config = require('../config.json');
   let suggestion = -1;
   for (let i = 0; i < config.suggestionsChannels.length; i++) {
-    if (reaction.message.channelId == config.suggestionsChannels[i]) {
+    if (reaction.message.channelId == config.suggestionsChannels[i].id) {
       suggestion = i;
       break;
     }
