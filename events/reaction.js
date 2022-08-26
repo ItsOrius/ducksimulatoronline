@@ -9,13 +9,20 @@ const names = ["messageReactionAdd", "messageReactionRemove"];
 async function execute(client, reaction, user) {
   await reaction.fetch();
   const config = require('../config.json');
-  if (reaction.message.channelId != config.suggestionsChannel) return;
+  let suggestion = -1;
+  for (let i = 0; i < config.suggestionsChannels.length; i++) {
+    if (reaction.message.channelId == config.suggestionsChannels[i]) {
+      suggestion = i;
+      break;
+    }
+  }
+  if (suggestion == -1) return;
   if (user.id == client.user.id) return;
   const message = reaction.message;
   const yesReaction = message.reactions.cache.find(reaction => reaction.emoji.name == "⬆️");
   const noReaction = message.reactions.cache.find(reaction => reaction.emoji.name == "⬇️");
   const ratio = yesReaction.count / (yesReaction.count + noReaction.count);
-  const embed = new Discord.MessageEmbed().setTitle("Suggestion");
+  const embed = new Discord.MessageEmbed().setTitle(config.suggestionsChannels[suggestion].title);
   if (message.embeds[0].description) embed.setDescription(message.embeds[0].description);
   if (message.embeds[0].footer) embed.setFooter(message.embeds[0].footer);
   if (message.embeds[0].timestamp) embed.setTimestamp(message.embeds[0].timestamp);
