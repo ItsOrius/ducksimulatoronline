@@ -14,14 +14,14 @@ function execute(client, msg) {
   if (msg.author.bot) return;
   const config = require("../config.json");
   const channels = config.suggestionsChannels;
-  let suggestion = false;
+  let suggestion = -1;
   for (let i = 0; i < channels.length; i++) {
     if (msg.channel.id == channels[i].id) {
       suggestion = i;
       break;
     }
   }
-  if (suggestion != false) {
+  if (suggestion != -1) {
     const embed = new Discord.MessageEmbed()
       .setTitle(channels[suggestion].title)
       .setDescription(msg.content)
