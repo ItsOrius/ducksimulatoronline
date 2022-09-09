@@ -96,7 +96,7 @@ function getLevel(xp) {
   let level = 0;
   let stop = false;
   while (!stop) {
-    if (xp >= getNeededXp(level+1)) {
+    if (xp >= getNeededXp(level + 1)) {
       level++;
     } else {
       stop = true;
@@ -145,7 +145,7 @@ function getShouldPingUser(user) {
     db[user.id] = new UserProfile(user.username, user.discriminator, user.avatarURL());
   }
   if (db[user.id].config.ping == null) {
-    return false;
+    return true;
   }
   return db[user.id].config.ping;
 }
