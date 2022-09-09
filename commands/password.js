@@ -7,8 +7,8 @@ const data = new SlashCommandBuilder()
 
 function generatePassword(id) {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const db = require("../secrets.json");
-  const users = require("../db.json");
+  const db = JSON.parse(fs.readFileSync("../secrets.json", "utf8"));
+  const users = JSON.parse(fs.readFileSync("../db.json", "utf8"));
   if (!users[id]) {
     throw new Error("Please talk a bit more before using this command!")
   }
