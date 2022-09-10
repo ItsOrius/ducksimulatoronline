@@ -35,9 +35,7 @@ function execute(client, member) {
         value: "Check out ``#⌚speedrun-feed`` for the latest **speedrun times**!",
         inline: true
       }
-    ])
-    .setFooter({ text: "Sent by " + client.user.username, iconURL: client.user.avatarURL() })
-    .setTimestamp();
+    ]);
   member.send({ embeds: [embed] });
 }
 
