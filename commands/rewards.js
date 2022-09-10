@@ -14,12 +14,12 @@ function execute(client, interaction) {
   const gameRewards = {
     "``1000 XP``": "Link your account through Duck Simulator 2!",
     "<@&933470435901841478>": "Complete Duck Simulator 2 in any way!",
-    "<@&1001312314038951976>": "Complete Duck Simulator 2 in under ten minutes with the speedrun timer enabled!",
+    "<@&1001312314038951976>": "Speedrun Duck Simulator 2 in under ten minutes!",
     "<@&949901792177700874>": "Complete the true ending of Duck Simulator 2!"
   };
   const levelRoles = [];
   Object.entries(config.levelRoles).forEach(element => {
-    levelRoles.push(`**Level ${element[0]}:** ${element[1]}`);
+    levelRoles.push(`**Level ${element[0]}:** <@&${element[1]}>`);
   });
   const embed = new Discord.MessageEmbed()
     .setTitle("Rewards")
@@ -34,8 +34,7 @@ function execute(client, interaction) {
         name: "Level Roles",
         value: levelRoles.join("\n")
       }
-    ])
-    .setFooter({ text: "Sent by" + client.user.username, iconURL: client.user.avatarURL() });
+    ]);
   interaction.reply({ embeds: [embed], ephemeral: true });
 }
 
