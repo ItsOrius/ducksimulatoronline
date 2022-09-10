@@ -17,7 +17,7 @@ function execute(client, member) {
     .addFields([
       {
         name: "Get some roles!",
-        value: "Use the ``/roles`` command in any channel to get a list of **roles that you're able to earn**!",
+        value: "Use the ``/rewards`` command in any channel to get a list of **roles that you're able to earn**!",
         inline: true
       },
       {
