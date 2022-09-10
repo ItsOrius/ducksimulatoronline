@@ -32,7 +32,8 @@ function execute(client, member) {
         value: "Check the ``#⌚speedrun-feed`` channel for the latest **speedrun times**!"
       }
     ])
-    .setFooter({ text: "Duck Simulator", iconURL: client.user.avatarURL() });
+    .setFooter({ text: "Duck Simulator", iconURL: client.user.avatarURL() })
+    .setTimestamp();
   member.send({ embeds: [embed] });
 }
 
