@@ -8,8 +8,7 @@ const config = require("../config.json");
  * @param {Discord.GuildMember} member
  */
 function execute(client, member) {
-  // direct message member with password
-  const channel = member.user.dmChannel || member.user.createDM();
+  // direct message member with embed
   const embed = new Discord.MessageEmbed()
     .setTitle("Welcome to the official Duck Simulator Discord server!")
     .setImage(client.guilds.cache.get(config.guildId).iconURL())
@@ -33,7 +32,7 @@ function execute(client, member) {
         value: "Check the ``⌚speedrun-feed`` channel for the latest **speedrun times**!"
       }
     ]);
-  channel.send({ embeds: [embed] });
+  member.send({ embeds: [embed] });
 }
 
 module.exports = { names, execute };
