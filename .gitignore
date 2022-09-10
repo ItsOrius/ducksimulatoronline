@@ -5,3 +5,4 @@ node_modules/
 website/uploads/*
 replit.nix
 .replit
+events/random_log.txt
