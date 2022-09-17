@@ -7,8 +7,8 @@ const data = new SlashCommandBuilder()
 
 function generatePassword(id) {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const db = JSON.parse(fs.readFileSync("../secrets.json", "utf8"));
-  const users = JSON.parse(fs.readFileSync("../db.json", "utf8"));
+  let db = require("../secrets.json")
+  let users = require("../db.json");
   if (!users[id]) {
     throw new Error("Please talk a bit more before using this command!")
   }
@@ -31,7 +31,7 @@ function generatePassword(id) {
  * @param {Discord.Interaction} interaction 
  */
 async function execute(client, interaction) {
-  const db = require("../secrets.json");
+  let db = require("../secrets.json");
   let password;
   Object.entries(db).forEach(([key, value]) => {
     if (value === interaction.user.id) {
