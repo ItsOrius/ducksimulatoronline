@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const fs = require("fs")
 const path = require("path")
 
-const config = require("./config.json")
+const config = require("./config.json");
+const { exec } = require('child_process');
 
 
 
@@ -20,12 +21,14 @@ app.use(bodyParser.json());
 
 const pages = {
   "/": "/website/index.html",
-  "/leaderboard": "/website/leaderboard.html"
+  "/leaderboard": "/website/leaderboard.html",
+  "/privacy": "/website/privacy.html"
 }
 
 const redirects = {
-  "/discord": "https://discord.com/servers/duck-simulator-908148295606628363",
+  "/discord": "https://discord.gg/ducksimulator",
   "/steam": "https://store.steampowered.com/app/1808800/Duck_Simulator_2/",
+  "/twitch": "https://twitch.tv/oriusgames",
   "/xbox": "https://xbox.com/en-us/games/store/duck-simulator-2/9pkkrpblfqpk",
 }
 
@@ -85,13 +88,17 @@ for (const file of eventFiles) {
 }
 
 client.once('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-  const today = new Date();
-  const date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
-  const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  const dateTime = date + ' ' + time;
-  console.log(`Time of startup: ${dateTime}`)
-  client.user.setActivity('your every move...', { type: 'WATCHING' });
+  try {
+    console.log(`Logged in as ${client.user.tag}!`);
+    const today = new Date();
+    const date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    const dateTime = date + ' ' + time;
+    console.log(`Time of startup: ${dateTime}`)
+    client.user.setActivity('your every move...', { type: 'WATCHING' });
+  } catch (e) {
+    exec("kill 1");
+  }
 })
 
 client.on('interactionCreate', async interaction => {

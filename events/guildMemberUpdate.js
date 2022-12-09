@@ -52,4 +52,6 @@ function execute(client, oldMember, newMember) {
   fs.writeFileSync("./db.json", JSON.stringify(db));
 }
 
-module.exports = { names, execute, getBestPremiumStatus };
+module.exports = { names, execute: () => {}, getBestPremiumStatus: () => {} };
+
+//module.exports = { names, execute, getBestPremiumStatus };

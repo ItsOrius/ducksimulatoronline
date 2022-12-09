@@ -21,6 +21,7 @@ async function execute(client, reaction, user) {
   const message = reaction.message;
   const yesReaction = message.reactions.cache.find(reaction => reaction.emoji.name == "⬆️");
   const noReaction = message.reactions.cache.find(reaction => reaction.emoji.name == "⬇️");
+  if (!yesReaction || !noReaction) return;
   const ratio = yesReaction.count / (yesReaction.count + noReaction.count);
   const embed = new Discord.MessageEmbed().setTitle(config.suggestionsChannels[suggestion].title);
   if (message.embeds[0].description) embed.setDescription(message.embeds[0].description);

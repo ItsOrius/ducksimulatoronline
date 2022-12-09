@@ -21,7 +21,8 @@ function execute(client, msg) {
       break;
     }
   }
-  if (suggestion != -1) {
+  if (suggestion != -1 && msg.type != "THREAD_CREATED") {
+    console.log(msg.type);
     const embed = new Discord.MessageEmbed()
       .setTitle(channels[suggestion].title)
       .setDescription(msg.content)
