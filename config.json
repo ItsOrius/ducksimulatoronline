@@ -4,6 +4,7 @@
   "guildId": "908148295606628363",
   "xpMultiplier": 1,
   "botColor": "#FFFFAA",
+  "DISCORD_REDIRECT_URI": "https://ducksimulator.com/api/v1/discord-oauth",
   "roleMultipliers": {
     "933470435901841478": 1.2,
     "949901792177700874": 1.3,

@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const { Client, Collection, Intents } = require('discord.js');
 const express = require("express")
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const fs = require("fs")
 const path = require("path")
@@ -18,6 +19,7 @@ const app = express();
 app.use(express.static(__dirname + "/website"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const pages = {
   "/": "/website/index.html",

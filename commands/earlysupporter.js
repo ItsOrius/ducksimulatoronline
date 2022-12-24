@@ -13,7 +13,7 @@ const data = new SlashCommandBuilder()
 function execute(client, interaction) {
   const premiumLevel = require("../events/guildMemberUpdate.js").getBestPremiumStatus(interaction.member);
   console.log(interaction.member.user.tag + ": Premium Level " + premiumLevel);
-  if (premiumLevel < 2) {
+  if (premiumLevel < 2 || !premiumLevel) {
     const embed = new Discord.MessageEmbed()
       .setTitle('Error')
       .setDescription('You need to have been a premium member in order to use this command!')

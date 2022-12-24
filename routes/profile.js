@@ -10,6 +10,10 @@ async function getProfile(id, res) {
       profile.displayColor = member.displayHexColor
       profile.displayStyle = config.roleStyles[member.roles.highest.id]
       profile.inServer = true
+      profile.roles = [];
+      member.roles.cache.forEach(role => {
+        profile.roles.push(role.id);
+      });
       if (res) {
         res.status(200).json(profile)
       }
