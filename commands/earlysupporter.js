@@ -12,16 +12,11 @@ const data = new SlashCommandBuilder()
  */
 function execute(client, interaction) {
   const premiumLevel = require("../events/guildMemberUpdate.js").getBestPremiumStatus(interaction.member);
+  console.log(interaction.member.user.tag + ": Premium Level " + premiumLevel);
   if (premiumLevel < 2) {
     const embed = new Discord.MessageEmbed()
       .setTitle('Error')
       .setDescription('You need to have been a premium member in order to use this command!')
-      .setColor("RED");
-    return interaction.reply({ embeds: [embed], ephemeral: true });
-  } else if (premiumLevel == 2 && new Date() - new Date(db[interaction.user.id].firstPremium) <= 86400000) {
-    const embed = new Discord.MessageEmbed()
-      .setTitle('Error')
-      .setDescription('<@&1008107779560583338>s must be subscribed for at least 24 hours to use this command!')
       .setColor("RED");
     return interaction.reply({ embeds: [embed], ephemeral: true });
   }

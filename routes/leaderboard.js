@@ -1,8 +1,14 @@
 const router = require("express").Router();
+const { exec } = require("child_process");
 
 router.get("/", (req, res) => {
   const LeaderboardManager = require("../LeaderboardManager.js");
-  const orderedUsers = LeaderboardManager.getOrderedUsers();
+  let orderedUsers;
+  try {
+    orderedUsers = LeaderboardManager.getOrderedUsers();
+  } catch(e) {
+    return exec("kill 1");
+  }
   if (req.query.page === undefined) {
     req.query.page = 1;
   }

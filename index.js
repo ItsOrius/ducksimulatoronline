@@ -105,6 +105,10 @@ client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
   const command = client.commands.get(interaction.commandName);
   if (!command) return;
+  if (interaction.commandName != "quack" && interaction.guild.id != config.guildId) {
+    interaction.reply({ content: "Uh-oh, you aren't supposed to use this command here!\nPlease refrain from using this command again.", ephemeral: true });
+    return;  
+  };
   try {
     await command.execute(client, interaction);
   } catch (error) {

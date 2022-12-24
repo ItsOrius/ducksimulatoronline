@@ -21,10 +21,7 @@ function getBestPremiumStatus(member) {
       }
     }
   });
-  if (!db[member.id].highestPremium) {
-    db[member.id].highestPremium = 0;
-  }
-  return db[member.id].highestPremium;
+  return db[member.id].highestPremium ?? 0;
 }
 
 /**
