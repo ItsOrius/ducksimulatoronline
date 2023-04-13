@@ -32,6 +32,9 @@ const redirects = {
   "/steam": "https://store.steampowered.com/app/1808800/Duck_Simulator_2/",
   "/twitch": "https://twitch.tv/oriusgames",
   "/xbox": "https://xbox.com/en-us/games/store/duck-simulator-2/9pkkrpblfqpk",
+  "/spotify": "https://open.spotify.com/album/2Kt9cmLKDTvwdHr2RAQYFD",
+  "/itunes": "https://music.apple.com/us/album/duck-simulator-2-original-game-soundtrack/1642752608",
+  "/newgrounds": "https://itsorius.newgrounds.com/"
 }
 
 Object.entries(pages).forEach(page => {

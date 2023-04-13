@@ -9,11 +9,20 @@ const { clientId, guildId } = require('./config.json');
 const commands = [];
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const blacklistedFiles = [
+  "earlysupporter.js",
+  "password.js",
+  "ping.js",
+  "rewards.js",
+  "setcontact.js",
+  "setname.js"
+];
 
 for (const file of commandFiles) {
+  if (blacklistedFiles.contains(file)) continue;
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
-  if (file.includes("quack")) commands.push(command.data.toJSON());
+  commands.push(command.data.toJSON());
 }
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);

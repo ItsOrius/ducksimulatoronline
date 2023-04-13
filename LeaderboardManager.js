@@ -34,7 +34,7 @@ function getDatabase() {
  */
 function registerMessage(msg) {
   // get multiplier
-  let { xpMultiplier } = require("./config.json");
+  let { xpMultiplier, guildId } = require("./config.json");
   // get database
   const db = getDatabase();
   // apply role multipliers from config
@@ -62,7 +62,7 @@ function registerMessage(msg) {
   // check if user has leveled up
   const newLevel = getLevel(db[user.id].xp);
   if (newLevel > oldLevel) {
-    if (getShouldPingUser(user)) {
+    if (getShouldPingUser(user) && msg.guildId == guildId) {
       // reply to msg with level up message
       msg.reply({ content: `Congratulations, ${user.toString()}! You've leveled up to level ${newLevel}!\n**P.S.** You can disable this message at any time by running \`\`/ping off\`\`.` });
     }

@@ -3,6 +3,7 @@ const request = require('request');
 const path = require('path');
 const fs = require('fs');
 const names = ['messageCreate'];
+const leaderboard = require('../LeaderboardManager');
 
 const lastMessages = {}
 
@@ -52,17 +53,34 @@ function execute(client, msg) {
       }
     }
   }
+  // require an image in #rubber-ducks
+  if (msg.channelId == 1089031041848725575) {
+    if (!msg.attachments.first()) {
+      msg.reply({content:`Hey <@${msg.author.id}>, you need to attach an image of a rubber duck with your post!`}).then(async response => {
+        msg.delete();
+        setTimeout(async () => {
+          await response.delete();
+        }, 5000);
+      });
+    }
+  }
+  // require an image in #memes
+  if (msg.channelId == 955132756508176446) {
+    if (!msg.attachments.first()) {
+      msg.reply({content:`Hey <@${msg.author.id}>, you need to attach a meme with your post!`}).then(async response => {
+        msg.delete();
+        setTimeout(async () => {
+          await response.delete();
+        }, 5000);
+      });
+    }
+  }
   const lastMessage = lastMessages[msg.author.id] != null ? lastMessages[msg.author.id] : 0;
   lastMessages[msg.author.id] = msg;
   // if author's last message was less than 10 seconds ago, return
   if (lastMessage.createdTimestamp > msg.createdTimestamp - 5000) {
     return;
   }
-  // if last message is identical to new message, return
-  if (msg.content == lastMessage.content) {
-    return;
-  }
-  const leaderboard = require('../LeaderboardManager');
   leaderboard.registerMessage(msg)
 }
 
