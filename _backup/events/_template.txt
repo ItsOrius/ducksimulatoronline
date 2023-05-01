@@ -1,0 +1,10 @@
+const names = ['eventName'];
+
+/**
+ * @param {Discord.Client} client
+ */
+function execute(client) {
+  // code stuff
+}
+
+module.exports = { names, execute };

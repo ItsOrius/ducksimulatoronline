@@ -1,26 +1,30 @@
 {
   "name": "ducksimulatoronline",
   "version": "1.0.0",
-  "description": "Handles the Duck Simulator website, Discord bot, and API!",
-  "main": "index.js",
-  "scripts": {
-    "start": "node ."
+  "private": true,
+  "description": "The open-source project for Duck Simulator's website, Discord bot, and API",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsOrius/ducksimulatoronline.git"
   },
-  "keywords": [],
-  "author": "Orius",
-  "license": "ISC",
-  "dependencies": {
-    "@discordjs/builders": "^0.15.0",
-    "@discordjs/rest": "^0.5.0",
-    "body-parser": "^1.20.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "discord-api-types": "^0.36.1",
-    "discord.js": "^13.8.1",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "express-rate-limit": "^6.5.1",
-    "node-fetch": "^2.6.7",
-    "request": "^2.88.2"
-  }
+  "contributors": [
+    {
+      "name": "Orius"
+    },
+    {
+      "name": "Eliza Milburn",
+      "email": "ermilburn02@outlook.com",
+      "url": "https://www.ermilburn02.com/"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/ItsOrius/ducksimulatoronline/issues"
+  },
+  "homepage": "https://github.com/ItsOrius/ducksimulatoronline#readme",
+  "workspaces": [
+    "packages/bot",
+    "packages/website",
+    "packages/shared"
+  ]
 }
