@@ -26,5 +26,8 @@
     "packages/bot",
     "packages/website",
     "packages/shared"
-  ]
+  ],
+  "dependencies": {
+    "typescript": "^5.0.4"
+  }
 }
