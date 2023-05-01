@@ -28,6 +28,7 @@
     "packages/shared"
   ],
   "dependencies": {
+    "sqlite3": "^5.1.6",
     "typescript": "^5.0.4"
   }
 }
