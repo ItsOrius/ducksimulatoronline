@@ -1,5 +1,6 @@
 import { Events } from "discord.js";
 import { DuckClient, DuckEvent } from "../types";
+import config from "../config.json";
 
 const XP_INCREMENT = 10;
 
@@ -11,7 +12,7 @@ const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
       message.author.bot ||
       message.system ||
       !message.inGuild() ||
-      message.guildId != process.env.BOT_SERVER_ID
+      message.guildId != config.botServerID.toString()
     )
       return;
 

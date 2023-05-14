@@ -7,9 +7,10 @@ import {
 import { readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { DuckCommand } from "./types";
+import config from "./config.json";
 
-import { config } from "dotenv";
-config();
+import { config as dotenv } from "dotenv";
+dotenv();
 
 const commands = [] as RESTPostAPIChatInputApplicationCommandsJSONBody[];
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
@@ -36,7 +37,7 @@ async function start() {
     );
 
     const data = (await rest.put(
-      Routes.applicationCommands(process.env.CLIENT_ID),
+      Routes.applicationCommands(config.clientID.toString()),
       { body: commands }
     )) as any;
 
