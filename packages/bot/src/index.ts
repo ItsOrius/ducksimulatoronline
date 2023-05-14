@@ -2,6 +2,7 @@ import { ActivityType, Collection, GatewayIntentBits } from "discord.js";
 import { readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { DuckClient, DuckCommand, DuckEvent } from "./types";
+import { db } from "shared";
 
 import { config } from "dotenv";
 config();
@@ -10,7 +11,11 @@ let client: DuckClient = null;
 
 async function createClient() {
   client = new DuckClient({
-    intents: [GatewayIntentBits.Guilds],
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent,
+    ],
     presence: {
       activities: [{ name: "your every move...", type: ActivityType.Watching }],
     },
@@ -21,6 +26,7 @@ async function createClient() {
   client.embedFooter = {
     text: `Quacker • v${client.version}`,
   };
+  client.databaseConnection = new db();
 }
 
 async function loadCommands() {
@@ -33,6 +39,7 @@ async function loadCommands() {
     const imported = await import(filePath);
     const command = imported.default as DuckCommand;
     client.commands.set(command.data.name, command);
+    console.log(`Loaded command ${command.data.name}`);
   }
 }
 
@@ -47,8 +54,10 @@ async function loadEvents() {
     const event = imported.default as DuckEvent<any>;
     if (event.once) {
       client.once(event.name, (...args) => event.execute(...args));
+      console.log(`Loaded once event ${event.name}`);
     } else {
       client.on(event.name, (...args) => event.execute(...args));
+      console.log(`Loaded event ${event.name}`);
     }
   }
 }

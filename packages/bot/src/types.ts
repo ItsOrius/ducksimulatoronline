@@ -11,6 +11,7 @@ import {
   EmbedFooterOptions,
   Collection,
 } from "discord.js";
+import { db } from "shared";
 
 interface DuckEvent<T extends keyof ClientEvents> {
   name: T;
@@ -31,6 +32,7 @@ class DuckClient extends Client {
   version: string;
   commands: Collection<string, DuckCommand>;
   embedFooter: EmbedFooterOptions;
+  databaseConnection: db;
 }
 
 export { DuckEvent, DuckCommand, DuckCommandAutocomplete, DuckClient };
