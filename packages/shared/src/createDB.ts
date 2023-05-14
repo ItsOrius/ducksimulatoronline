@@ -6,8 +6,9 @@ import sqlite3 from "sqlite3";
 let db = new sqlite3.Database("../../data/db.sqlite3", (err) => {
   if (err) {
     console.error(err.message);
+  } else {
+    console.log("Connected to the database.");
   }
-  console.log("Connected to the database.");
 });
 
 // Create the users table
@@ -56,6 +57,7 @@ db.run(
 db.close((err) => {
   if (err) {
     console.error(err.message);
+  } else {
+    console.log("Closed the database connection.");
   }
-  console.log("Closed the database connection.");
 });

@@ -1,4 +1,9 @@
 {
-  "clientID": 683140181024702475,
-  "botServerID": 860587927435608096
+  "clientID": "683140181024702475",
+  "botServerID": "860587927435608096",
+  "baseXP": 10,
+  "baseCooldown": 10,
+  "multipliers": {
+    "roles": [{ "id": "980445157398839296", "multiplier": 1.5 }]
+  }
 }

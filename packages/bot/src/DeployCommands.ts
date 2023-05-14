@@ -36,10 +36,9 @@ async function start() {
       `Started refreshing ${commands.length} application (/) commands.`
     );
 
-    const data = (await rest.put(
-      Routes.applicationCommands(config.clientID.toString()),
-      { body: commands }
-    )) as any;
+    const data = (await rest.put(Routes.applicationCommands(config.clientID), {
+      body: commands,
+    })) as any;
 
     console.log(
       `Successfully reloaded ${data.length} application (/) commands.`
