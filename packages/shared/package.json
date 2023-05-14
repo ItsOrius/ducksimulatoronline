@@ -2,8 +2,13 @@
   "name": "shared",
   "version": "1.0.0",
   "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --sourceMap",
-    "create_db": "node ./dist/create_db.js"
+    "build": "tsc",
+    "build:dev": "tsc --sourcemap",
+    "build:release": "tsc",
+    "watch": "tsc --sourcemap --watch --preserveWatchOutput",
+    "createDB": "node ./dist/createDB.js"
   }
 }
