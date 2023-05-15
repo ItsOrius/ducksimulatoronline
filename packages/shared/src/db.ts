@@ -94,6 +94,43 @@ export class db {
     });
   }
 
+  public getTopUsersByPage(page: number): Promise<dbUser[]> {
+    return new Promise((resolve, reject) => {
+      this.connection.all(
+        `SELECT * FROM users ORDER BY xp DESC LIMIT 10 OFFSET ?`,
+        (page - 1) * 10,
+        (err, rows) => {
+          if (err) {
+            reject(err);
+          }
+
+          const users: dbUser[] = [];
+
+          rows.forEach((row) => {
+            const rowCasted = row as dbUserInternal;
+
+            const user: dbUser = {
+              id: rowCasted.id,
+              userID: rowCasted.userID,
+              username: rowCasted.username,
+              discriminator: rowCasted.discriminator,
+              avatarURL: rowCasted.avatarURL,
+              messages: rowCasted.messages,
+              lastMessageTime: rowCasted.lastMessageTime,
+              xp: rowCasted.xp,
+              level: rowCasted.level,
+              pingForLevelUps: rowCasted.pingForLevelUps == 1,
+            };
+
+            users.push(user);
+          });
+
+          resolve(users);
+        }
+      );
+    });
+  }
+
   public addUser(
     userID: string,
     username: string,
