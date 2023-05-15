@@ -5,5 +5,7 @@
   "baseCooldown": 10,
   "multipliers": {
     "roles": [{ "id": "980445157398839296", "multiplier": 1.5 }]
-  }
+  },
+  "xpPerLevelBase": 50,
+  "xpPerLevelMultiplier": 1.3
 }

@@ -53,6 +53,21 @@ const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
     });
     //#endregion
 
+    //#region Calculate new values
+    let newXP = user.xp + Math.floor(config.baseXP * multiplier);
+
+    function getNeededXP(level: number): number {
+      return Math.floor(
+        config.xpPerLevelBase * config.xpPerLevelMultiplier ** level
+      );
+    }
+
+    let newLevel = user.level;
+    while (newXP >= getNeededXP(newLevel)) {
+      newLevel++;
+    }
+    //#endregion
+
     //#region Update values
     await db.updateUser(
       message.author.id,
@@ -61,13 +76,16 @@ const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
       message.author.avatarURL(),
       user.messages + 1,
       message.createdTimestamp,
-      user.xp + Math.floor(config.baseXP * multiplier)
+      newXP,
+      newLevel,
+      user.pingForLevelUps
     );
     //#endregion
 
     // Test code
-    user = await db.getUser(message.author.id);
-    message.reply("```json\n" + JSON.stringify(user, null, 2) + "\n```");
+    if (newLevel > user.level && user.pingForLevelUps) {
+      message.reply(`Congratulations! You leveled up to level ${newLevel}!`);
+    }
   },
 };
 

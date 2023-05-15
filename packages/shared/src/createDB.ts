@@ -21,7 +21,9 @@ db.run(
         avatarURL TEXT,
         messages INTEGER,
         lastMessageTime TEXT,
-        xp INTEGER
+        xp INTEGER,
+        level INTEGER,
+        pingForLevelUps INTEGER
     )`,
   (err) => {
     if (err) {
@@ -30,7 +32,7 @@ db.run(
       console.log("Created users table.");
       // Add test users
       db.run(
-        `INSERT INTO users (userID, username, discriminator, avatarURL, messages, lastMessageTime, xp) VALUES ("643945264868098049", "discord", 0, "https://cdn.discordapp.com/avatars/643945264868098049/c6a249645d46209f337279cd2ca998c7.png", 0, 0, 0)`,
+        `INSERT INTO users (userID, username, discriminator, avatarURL, messages, lastMessageTime, xp, level, pingForLevelUps) VALUES ("643945264868098049", "discord", 0, "https://cdn.discordapp.com/avatars/643945264868098049/c6a249645d46209f337279cd2ca998c7.png", 0, 0, 0, 0, 1)`,
         (err) => {
           if (err) {
             console.error(err.message);
@@ -40,7 +42,7 @@ db.run(
         }
       );
       db.run(
-        `INSERT INTO users (userID, username, discriminator, avatarURL, messages, lastMessageTime, xp) VALUES ("1", "Clyde", 0, "https://discord.com/assets/18126c8a9aafeefa76bbb770759203a9.png", 0, 0, 0)`,
+        `INSERT INTO users (userID, username, discriminator, avatarURL, messages, lastMessageTime, xp, level, pingForLevelUps) VALUES ("1", "Clyde", 0, "https://discord.com/assets/18126c8a9aafeefa76bbb770759203a9.png", 0, 0, 0, 0, 1)`,
         (err) => {
           if (err) {
             console.error(err.message);

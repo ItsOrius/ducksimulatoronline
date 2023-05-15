@@ -9,7 +9,9 @@ import sqlite3 from "sqlite3";
         avatarURL TEXT,
         messages INTEGER,
         lastMessageTime TEXT,
-        xp INTEGER
+        xp INTEGER,
+        level INTEGER
+        pingForLevelUps INTEGER
     )`
 */
 
@@ -34,7 +36,23 @@ export class db {
           if (err) {
             reject(err);
           }
-          resolve(row as dbUser);
+
+          const rowCasted = row as dbUserInternal;
+
+          const user: dbUser = {
+            id: rowCasted.id,
+            userID: rowCasted.userID,
+            username: rowCasted.username,
+            discriminator: rowCasted.discriminator,
+            avatarURL: rowCasted.avatarURL,
+            messages: rowCasted.messages,
+            lastMessageTime: rowCasted.lastMessageTime,
+            xp: rowCasted.xp,
+            level: rowCasted.level,
+            pingForLevelUps: rowCasted.pingForLevelUps == 1,
+          };
+
+          resolve(user);
         }
       );
     });
@@ -48,7 +66,29 @@ export class db {
           if (err) {
             reject(err);
           }
-          resolve(rows as dbUser[]);
+
+          const users: dbUser[] = [];
+
+          rows.forEach((row) => {
+            const rowCasted = row as dbUserInternal;
+
+            const user: dbUser = {
+              id: rowCasted.id,
+              userID: rowCasted.userID,
+              username: rowCasted.username,
+              discriminator: rowCasted.discriminator,
+              avatarURL: rowCasted.avatarURL,
+              messages: rowCasted.messages,
+              lastMessageTime: rowCasted.lastMessageTime,
+              xp: rowCasted.xp,
+              level: rowCasted.level,
+              pingForLevelUps: rowCasted.pingForLevelUps == 1,
+            };
+
+            users.push(user);
+          });
+
+          resolve(users);
         }
       );
     });
@@ -62,7 +102,7 @@ export class db {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       this.connection.run(
-        `INSERT INTO users (userID, username, discriminator, avatarURL, messages, lastMessageTime, xp) VALUES (?, ?, ?, ?, 0, 0, 0)`,
+        `INSERT INTO users (userID, username, discriminator, avatarURL, messages, lastMessageTime, xp, level, pingForLevelUps) VALUES (?, ?, ?, ?, 0, 0, 0, 0, 1)`,
         [userID, username, discriminator, avatarURL],
         (err) => {
           if (err) {
@@ -81,11 +121,13 @@ export class db {
     avatarURL: string,
     messages: number,
     lastMessageTime: number,
-    xp: number
+    xp: number,
+    level: number,
+    pingForLevelUps: boolean
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       this.connection.run(
-        `UPDATE users SET username = ?, discriminator = ?, avatarURL = ?, messages = ?, lastMessageTime = ?, xp = ? WHERE userID = ?`,
+        `UPDATE users SET username = ?, discriminator = ?, avatarURL = ?, messages = ?, lastMessageTime = ?, xp = ?, level = ?, pingForLevelUps = ? WHERE userID = ?`,
         [
           username,
           discriminator,
@@ -93,6 +135,8 @@ export class db {
           messages,
           lastMessageTime.toString(),
           xp,
+          level,
+          pingForLevelUps ? 1 : 0,
           userID,
         ],
         (err) => {
@@ -115,6 +159,19 @@ export class db {
   }
 }
 
+type dbUserInternal = {
+  id: number;
+  userID: string;
+  username: string;
+  discriminator: number;
+  avatarURL: string;
+  messages: number;
+  lastMessageTime: string;
+  xp: number;
+  level: number;
+  pingForLevelUps: number;
+};
+
 export type dbUser = {
   id: number;
   userID: string;
@@ -124,4 +181,6 @@ export type dbUser = {
   messages: number;
   lastMessageTime: string;
   xp: number;
+  level: number;
+  pingForLevelUps: boolean;
 };
