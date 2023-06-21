@@ -8,5 +8,6 @@
   },
   "xpPerLevelBase": 50,
   "xpPerLevelMultiplier": 1.3,
-  "errorWebhookUrl": "https://discord.com/api/webhooks/1121142882670231593/P_j6MZVqBGhgSSfi3DaF80uYql-k_zooFwfVX0FutQAfp9OymlOpBL5KlQ_qE372G5FS"
+  "errorWebhookUrl": "https://discord.com/api/webhooks/1121142882670231593/P_j6MZVqBGhgSSfi3DaF80uYql-k_zooFwfVX0FutQAfp9OymlOpBL5KlQ_qE372G5FS",
+  "leaderboardURL": "INSERT_LEADERBOARD_URL_HERE"
 }

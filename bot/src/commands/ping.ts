@@ -9,6 +9,7 @@ const PingCommand: DuckCommand = {
     const sent = await interaction.reply({
       content: "Pinging...",
       fetchReply: true,
+      ephemeral: true,
     });
     interaction.editReply(
       `Pong! Latency is ${
