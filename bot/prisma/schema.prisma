@@ -16,16 +16,16 @@ model User {
   username      String
   discriminator String
   avatarURL     String
-  messages      Int
-  xp            Int
+  messages      Int     @default(0)
+  xp            Int     @default(0)
   config        Config?
 }
 
 model Config {
-  id              Int      @id @default(autoincrement())
-  linked          Boolean?
-  ping            Boolean?
+  id              Int     @id @default(autoincrement())
+  linked          Boolean @default(false)
+  ping            Boolean @default(false)
   fastestSpeedrun String?
-  userId          Int      @unique
-  user            User     @relation(fields: [userId], references: [id])
+  userId          Int     @unique
+  user            User    @relation(fields: [userId], references: [id])
 }

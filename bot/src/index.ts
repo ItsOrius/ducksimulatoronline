@@ -28,6 +28,7 @@ const createClient = async () => {
     text: `Quacker • v${client.version}`,
   };
   client.prismaClient = new PrismaClient();
+  console.log("Database connection created");
 };
 
 const loadCommands = async () => {
