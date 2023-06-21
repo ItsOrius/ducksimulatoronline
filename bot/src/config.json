@@ -1,0 +1,11 @@
+{
+  "clientID": "1120112046650970123",
+  "botServerID": "1120113102546018334",
+  "baseXP": 10,
+  "baseCooldown": 10,
+  "multipliers": {
+    "roles": [{ "id": "", "multiplier": 1.5 }]
+  },
+  "xpPerLevelBase": 50,
+  "xpPerLevelMultiplier": 1.3
+}

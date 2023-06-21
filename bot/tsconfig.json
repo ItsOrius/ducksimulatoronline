@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es2020",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "strict": true,
+    "lib": ["es2017"],
+    "types": ["node", "discord.js"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

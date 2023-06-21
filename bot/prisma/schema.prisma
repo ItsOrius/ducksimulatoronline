@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../../data/db.sqlite"
+}
+
+model User {
+  id            Int     @id @default(autoincrement())
+  discordUserId String  @unique
+  username      String
+  discriminator String
+  avatarURL     String
+  messages      Int
+  xp            Int
+  config        Config?
+}
+
+model Config {
+  id              Int      @id @default(autoincrement())
+  linked          Boolean?
+  ping            Boolean?
+  fastestSpeedrun String?
+  userId          Int      @unique
+  user            User     @relation(fields: [userId], references: [id])
+}
