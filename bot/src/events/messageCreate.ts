@@ -2,6 +2,7 @@ import { Awaitable, Events, Message, WebhookClient } from "discord.js";
 import { DuckClient, DuckEvent } from "../types";
 import config from "../config.json";
 import { getOrCreateUser } from "../database/getUser";
+import { updateUser } from "../database/updateUser";
 
 const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
   name: Events.MessageCreate,
@@ -43,32 +44,40 @@ const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
 
     let newXP = user.xp + Math.floor(config.baseXP * multiplier);
 
-    const updatedUser = await prisma.user.update({
-      where: {
-        discordUserId: discordUser.id,
-      },
-      data: {
-        messages: newMessageTotal,
-        xp: newXP,
-        username: discordUser.username, // In case they changed it
-        discriminator: discordUser.discriminator, // In case they changed it
-        avatarURL: discordUser.avatarURL({ forceStatic: true })!, // In case they changed it
-      },
-      include: {
-        config: true,
-      },
-    });
+    // const updatedUser = await prisma.user.update({
+    //   where: {
+    //     discordUserId: discordUser.id,
+    //   },
+    //   data: {
+    //     messages: newMessageTotal,
+    //     xp: newXP,
+    //     username: discordUser.username, // In case they changed it
+    //     discriminator: discordUser.discriminator, // In case they changed it
+    //     avatarURL: discordUser.avatarURL({ forceStatic: true })!, // In case they changed it
+    //   },
+    //   include: {
+    //     config: true,
+    //   },
+    // });
+    const updatedUser = await updateUser(
+      discordUser.id,
+      prisma,
+      discordUser,
+      newMessageTotal,
+      newXP,
+      message.createdAt
+    );
 
     // TODO: Temp
-    // message.reply({
-    //   content: `XP: ${updatedUser.xp}\nMessages: ${
-    //     updatedUser.messages
-    //   }\n\nFull user:\n\`\`\`json\n${JSON.stringify(
-    //     updatedUser,
-    //     null,
-    //     2
-    //   )}\n\`\`\``,
-    // });
+    message.reply({
+      content: `XP: ${updatedUser.xp}\nMessages: ${
+        updatedUser.messages
+      }\n\nFull user:\n\`\`\`json\n${JSON.stringify(
+        updatedUser,
+        null,
+        2
+      )}\n\`\`\``,
+    });
   },
 };
 

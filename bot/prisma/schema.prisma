@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  discordUserId String  @unique
-  username      String
-  discriminator String
-  avatarURL     String
-  messages      Int     @default(0)
-  xp            Int     @default(0)
-  config        Config?
+  id              Int      @id @default(autoincrement())
+  discordUserId   String   @unique
+  username        String
+  discriminator   String
+  avatarURL       String
+  messages        Int      @default(0)
+  xp              Int      @default(0)
+  lastMessageTime DateTime @default(now())
+  config          Config?
 }
 
 model Config {
