@@ -18,7 +18,18 @@ interface DuckEvent<T extends keyof ClientEvents> {
 }
 
 interface DuckCommand {
-  data: SlashCommandBuilder;
+  data: Omit<
+    SlashCommandBuilder,
+    | "addBooleanOption"
+    | "addUserOption"
+    | "addChannelOption"
+    | "addRoleOption"
+    | "addAttachmentOption"
+    | "addMentionableOption"
+    | "addStringOption"
+    | "addIntegerOption"
+    | "addNumberOption"
+  >;
   execute: (interaction: ChatInputCommandInteraction) => Awaitable<void>;
 }
 

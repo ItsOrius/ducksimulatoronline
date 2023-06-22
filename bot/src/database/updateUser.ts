@@ -9,7 +9,7 @@ export async function updateUser(
   totalXP: number,
   lastMessageTime: Date
 ): Promise<User> {
-  const user = prisma.user.update({
+  const user = await prisma.user.update({
     where: {
       discordUserId,
     },
