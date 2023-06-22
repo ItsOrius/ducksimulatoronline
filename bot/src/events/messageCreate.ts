@@ -1,6 +1,7 @@
 import { Awaitable, Events, Message, WebhookClient } from "discord.js";
 import { DuckClient, DuckEvent } from "../types";
 import config from "../config.json";
+import { getOrCreateUser } from "../database/getUser";
 
 const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
   name: Events.MessageCreate,
@@ -10,7 +11,8 @@ const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
       message.author.bot ||
       message.system ||
       !message.inGuild() ||
-      message.guildId != config.botServerID
+      message.guildId != config.botServerID ||
+      message.webhookId
     )
       return;
 
@@ -18,33 +20,7 @@ const MessageCreateEvent: DuckEvent<Events.MessageCreate> = {
     let prisma = client.prismaClient;
     let discordUser = message.author;
 
-    // TODO: Move database code to it's own file
-
-    let user = await prisma.user.findUnique({
-      where: {
-        discordUserId: discordUser.id,
-      },
-      include: {
-        config: true,
-      },
-    });
-
-    if (user == null) {
-      user = await prisma.user.create({
-        data: {
-          discordUserId: discordUser.id,
-          username: discordUser.username,
-          discriminator: discordUser.discriminator,
-          avatarURL: discordUser.avatarURL({ forceStatic: true })!,
-          config: {
-            create: {},
-          },
-        },
-        include: {
-          config: true,
-        },
-      });
-    }
+    const user = await getOrCreateUser(discordUser.id, prisma, discordUser);
 
     if (user == null) {
       console.log(`Problem creating database entry for ${discordUser.tag}`);
